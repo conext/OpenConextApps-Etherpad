@@ -1,3 +1,5 @@
+EtherpadLite for JACSON - Group-enabled
+
 EtherpadLite for SURFconext - Deployment instructions
 ------------------------------------------------------------
 2011/10/24; mdobrinic
