@@ -5,7 +5,7 @@ class EPLc_Storage {
 	
 	function __construct($name) {
 		/* open file */
-		$dbfile = 'storage/$name.sqlite';
+		$dbfile = 'storage/'.$name.'.sqlite';
 		
 		if ($this->_db = new SQLiteDatabase($dbfile)) {
 			$q = @$this->_db->query('SELECT key1 FROM data LIMIT 1');

@@ -70,6 +70,7 @@ class EPLc_Manager {
 		$userId = null;
 		$userCommonName = null;
 		
+        error_log($service->_authenticated);
 		if ($service->_authenticated) {
 			if ($service->_authMethod == 'OAuth') {
 				
@@ -77,7 +78,7 @@ class EPLc_Manager {
 				$server = new sspmod_oauth_OAuthServer($store);
 				$server->add_signature_method($hmac_method = new OAuthSignatureMethod_HMAC_SHA1());
 				$server->add_signature_method($plaintext_method = new OAuthSignatureMethod_PLAINTEXT());
-				$server->add_signature_method($rsa_method = new sspmod_oauth_OAuthSignatureMethodRSASHA1());
+				//$server->add_signature_method($rsa_method = new sspmod_oauth_OAuthSignatureMethodRSASHA1());
 
 				$oAuthRequest = OAuthRequest::from_request();
 				list( $consumer, $token ) = $server->verify_request($oAuthRequest);
@@ -113,7 +114,8 @@ class EPLc_Manager {
 		
 		$userinfo = EPLc_UserInfo::create($userId, $userCommonName, $userdata);
 
-		
+		error_log(var_export($userinfo,true));
+        error_log(var_export($service,true));
 		if ($service->_groupService) {
 			$group = $this->getGroupFromRequest($service, $request);
 			
@@ -135,7 +137,7 @@ class EPLc_Manager {
 		
 		if ($group!=null) {
 			$groupinfo = EPLc_GroupInfo::create($groupInstance->getIdentifier(), 
-					$groupInstance->_aAttributes["description"], $groupInstance->_aAttributes);
+					$groupInstance->getIdentifier(), $groupInstance->_aAttributes);
 		} else {
 			$groupinfo = null;
 		}
@@ -187,7 +189,7 @@ class EPLc_Manager {
 		if (isset($userdata['conext'])) {
 			$userId = $userdata['conext'];
 		} else {
-			$userId = $userdata['NameID'];
+			$userId = $userdata['uid'];
 		}
 		if (is_array($userId)) { $userId = join(',', $userId); }
 		

@@ -8,16 +8,19 @@ class Service_padaccesstoken extends EPLc_Service_IAbstractService {
 	 * @see include/classes/Service/EPLc_Service_IAbstractService::perform()
 	 */
 	function perform($userinfo, $groupinfo, $serviceargs) {
+    error_log(var_export($groupinfo,true));
     $m = 'Performing padaccesstoken for ' . print_r($serviceargs, true) . ' for user ' . $userinfo->_userId;
     if ($groupinfo != null) { $m .= ' and group ' . $groupinfo->_groupId; }
-    // Logger_Log::debug($m, 'Service_padaccesstoken');
+    //   Logger_Log::debug($m, 'Service_padaccesstoken');
     
     $padname = $serviceargs[0];
-    
+ 
     $storage = new EPLc_Storage('padaccesstoken');
-    
+
     /* generate this token */
     $userdata_token = String_Util::randomString(24);
+    error_log("pad access token");
+    error_log($userdata_token);
     
     /* attach authorization to it */
     $userdata = array(

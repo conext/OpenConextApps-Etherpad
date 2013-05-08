@@ -21,7 +21,7 @@ $store = new epl_OAuthStorage();
 $server = new sspmod_oauth_OAuthServer($store);
 $server->add_signature_method($hmac_method = new OAuthSignatureMethod_HMAC_SHA1());
 $server->add_signature_method($plaintext_method = new OAuthSignatureMethod_PLAINTEXT());
-$server->add_signature_method($rsa_method = new sspmod_oauth_OAuthSignatureMethodRSASHA1());
+//$server->add_signature_method($rsa_method = new sspmod_oauth_OAuthSignatureMethodRSASHA1());
 
 $proxied_content = false;
 
@@ -89,8 +89,8 @@ try {
 /* is user logged on? */
 if (isset($userattributes['conext'])) {
 	$userId = $userattributes['conext'];
-} else {
-	$userId = $userattributes['NameID'];
+} else { 
+	$userId = $userattributes['urn:mace:dir:attribute-def:uid'];
 }
 if (is_array($userId)) { $userId = join(',', $userId); }
 $userCommonName = $userattributes['urn:mace:dir:attribute-def:cn'];
@@ -201,24 +201,25 @@ foreach ($aGroupInstances as $group) {
 }
 
 /* login the user@etherpad */
-// --> this is irrelevant, as we need to login for a GROUP everytime we switch groups 
-//if (! isset($_COOKIE['sessionID'])) {
-//
-//	$endtimestamp = time() + ETHERPADLITE_SESSION_DURATION;
-//
-//	$ep_session = $oEPLclient->createSession(
-//		$ep_group->groupID,
-//		$ep_author->authorID,
-//		$endtimestamp);
-//
-//	$sID = $ep_session->sessionID;
-//	// bool setcookie ( string $name [, string $value [, int $expire = 0 [, string $path [, string $domain [, bool $secure = false [, bool $httponly = false ]]]]]] )
-//	setcookie("sessionID",$sID, $endtimestamp, '/'); // Set a cookie in root of server
-//	echo "New session created<br/>\n";
-//} else {
-//	$sID = $_COOKIE['sessionID'];
-//}
+/*
+ --> this is irrelevant, as we need to login for a GROUP everytime we switch groups 
+if (! isset($_COOKIE['sessionID'])) {
 
+	$endtimestamp = time() + ETHERPADLITE_SESSION_DURATION;
+
+	$ep_session = $oEPLclient->createSession(
+		$ep_group->groupID,
+		$ep_author->authorID,
+		$endtimestamp);
+
+	$sID = $ep_session->sessionID;
+	// bool setcookie ( string $name [, string $value [, int $expire = 0 [, string $path [, string $domain [, bool $secure = false [, bool $httponly = false ]]]]]] )
+	setcookie("sessionID",$sID, $endtimestamp, '/'); // Set a cookie in root of server
+	echo "New session created<br/>\n";
+} else {
+	$sID = $_COOKIE['sessionID'];
+}
+*/
 /* deal with group pads */
 // $aPads = array("Pad1", "AnotherPad", "ScratchPad", "Pad2", "Another Pad2");
 

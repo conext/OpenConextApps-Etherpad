@@ -28,7 +28,7 @@ try {
 	}
 	
 } catch (Exception $e) {
-	$o = array(
+    $o = array(
 			'result' => 'EXCEPTION',
 			'message' => $e->getMessage(),
 			);

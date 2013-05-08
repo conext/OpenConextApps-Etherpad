@@ -27,7 +27,9 @@ class EtherpadLiteClient {
       array('apikey' => $this->apiKey),
       $arguments
     );
+    error_log("ARGUMENTS " . var_export($arguments,true));
     $url = $this->baseUrl."/".self::API_VERSION."/".$function."?".http_build_query($query);
+    error_log("Request URL: " . $url);
     // not all PHP installs have access to curl
     if (function_exists('curl_init')){
       $c = curl_init($url);
@@ -35,10 +37,16 @@ class EtherpadLiteClient {
       curl_setopt($c, CURLOPT_TIMEOUT, 20);
       $result = curl_exec($c);
       curl_close($c);
+      error_log("CURL value: " . $result);
     } else {
       $result = file_get_contents($url);
+      error_log("File contents value: " . $result);
     }
     
+    //$result = file_get_contents($url);
+    error_log($result);
+    error_log("URL: " . $this->baseUrl);
+    error_log("API KEY: " . $this->apiKey);
     if($result == ""){
       throw new UnexpectedValueException("Empty or No Response from the server");
     }

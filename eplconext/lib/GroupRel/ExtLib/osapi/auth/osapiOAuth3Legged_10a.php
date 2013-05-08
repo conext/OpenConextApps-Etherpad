@@ -169,6 +169,8 @@ class osapiOAuth3Legged_10a extends osapiOAuth2Legged {
   public function obtainRequestToken($callbackUrl, $uid) {
     $this->storage->set($this->storageKey.":originalUrl", $callbackUrl);
     $callbackParams = (strpos($_SERVER['REQUEST_URI'], '?') !== false ? '&' : '?') . 'uid=' . urlencode($uid);
+    //var_export($callbackUrl);
+    
     $ret = $this->requestRequestToken($callbackUrl . $callbackParams);
     if ($ret['http_code'] == '200') {
       $matches = array();
@@ -203,6 +205,7 @@ class osapiOAuth3Legged_10a extends osapiOAuth2Legged {
     }
     $requestTokenRequest->set_parameter('oauth_callback', $callbackUrl);
     $requestTokenRequest->sign_request($this->signatureMethod, $this->consumerToken, NULL);
+    //var_export($requestTokenRequest);
     $o = osapiIO::send($requestTokenRequest, 'GET', $this->provider->httpProvider);
     return $o;
   }

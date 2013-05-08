@@ -7,6 +7,7 @@
  * 3) use external OpenSocial.getGroups for retrieving groups (3-legged-oauth) 
  */
 $r = $_GET['r'];
+$r = "t-eplconext.xml";
 $prefix='t-';
 
 if ($r == $prefix.'eplconext.xml') {
@@ -28,18 +29,18 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
       author="mdobrinic"
       author_email="info@cozmanova.com"
       description="Etherpad Lite GroupPad gadget">
-    <Require feature="opensocial-0.9" />
-    <Require feature="locked-domain"/>
+    <Require feature="opensocial-2.5" />
     <Require feature="opensocial-data" />
     <Require feature="dynamic-height"/>
     <Require feature="osapi" />
+    <Require feature="locked-domain"/>
     <Require feature="views" />
     <Require feature="setprefs" />
     <OAuth>
       <Service name="EPLconext">
-        <Access url="https://etherpad.conext.surfnetlabs.nl/simplesaml/module.php/oauth/accessToken.php" method="GET" /> 
-        <Request url="https://etherpad.conext.surfnetlabs.nl/simplesaml/module.php/oauth/requestToken.php" method="GET" /> 
-        <Authorization url="https://etherpad.conext.surfnetlabs.nl/simplesaml/module.php/oauth/authorize.php" /> 
+        <Access url="https://etherpad-groups.identitylabs.org/simplesaml/module.php/oauth/accessToken.php" method="GET" /> 
+        <Request url="https://etherpad-groups.identitylabs.org/simplesaml/module.php/oauth/requestToken.php" method="GET" /> 
+        <Authorization url="https://etherpad-groups.identitylabs.org/simplesaml/module.php/oauth/authorize.php" /> 
       </Service>
 <?php if ($mode == 'opensocial-conext') { ?>      
       <Service name="OSconext">
@@ -57,11 +58,19 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
   <Content type="html" view="default">
   <![CDATA[ 
   <script src="https://portal.surfconext.nl/coin/js/jquery-1.4.2.min.js"></script>
-  <script src="https://etherpad.conext.surfnetlabs.nl/eplconext/gadget/popup.js"></script>
-  <script src="https://etherpad.conext.surfnetlabs.nl/eplconext/gadget/h.js"></script>
-  <script src="https://etherpad.conext.surfnetlabs.nl/eplconext/gadget/gs.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://etherpad.conext.surfnetlabs.nl/eplconext/css/eplgadget.css" />
+  <script src="https://etherpad-groups.identitylabs.org/eplconext/gadget/popup.js"></script>
+  <script src="https://etherpad-groups.identitylabs.org/eplconext/gadget/h.js"></script>
+  <script src="https://etherpad-groups.identitylabs.org/eplconext/gadget/gs.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://etherpad-groups.identitylabs.org/eplconext/css/eplgadget.css" />
   
+    <div id="group_select_bar">
+        <label for="group_select">Group to view:</label>
+        <select id="group_select">
+            <option value="1000" selected>1000</option>
+            <option value="2000">2000</option>
+        </select>
+    </div>
+
     <div id="main" style="display: none"></div>
     <div id="approval" style="display: none">
       <p>Give this gadget permission to use your personal and team information 
@@ -76,7 +85,7 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
     
     // duplicated in each view:
     var gadgCtx = {
-      epl_baseurl: 'https://etherpad.conext.surfnetlabs.nl/eplconext/',
+      epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/',
 <?php 
 print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',');
 ?>      
@@ -104,6 +113,31 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
 <?php } else { ?>
       null
 <?php } ?>;
+
+function get_current_group() {
+    /* temporary, current group ID should be moved into container */
+    var e = document.getElementById("group_select");
+    var v = e.options[e.selectedIndex].value;   
+    return v;
+}
+
+function get_current_group_name() {
+    var group = get_current_group();
+    return group.title;
+}
+
+function get_user_groups() {
+    osapi.groups.get().execute(function(d) {
+        //clog("in get_user_groups():");
+        console.log(d); 
+        $('#group_select').empty();
+        d.list.forEach(function(e) {
+            $('#group_select').append($('<option></option>')
+                .attr('value', e.id)
+                .text(e.title));  
+        });
+    });
+}
 
     // Helper for UI, facilitating OAuth setup 
     function showOneSection(toshow) {
@@ -150,6 +184,7 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
     params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
 
     gadgets.io.makeRequest(url, function (response) {
+      console.log(response);
       if (response.oauthApprovalUrl) {
         alert('OAuth not yet setup; flow error?');
         return;
@@ -219,7 +254,7 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
     var s = pad.name;
     var liNode = document.createElement('li');
     liNode.appendChild( cozmanovaHelper.createElementWithAttributes('img', {
-      'src':'https://etherpad.conext.surfnetlabs.nl/eplconext/images/arrownext01.png',
+      'src':'https://etherpad-groups.identitylabs.org/eplconext/images/arrownext01.png',
       'height':'12px', 'style': 'margin-right:5px;'}) );
     
     var a = cozmanovaHelper.createElementWithAttributes('a', { 'href' : '#', 'class' : 'padnode' } );
@@ -299,7 +334,7 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
         addPadLink.appendChild( document.createTextNode('Add new pad') );
         var addPadLinkItem=cozmanovaHelper.createElementWithAttributes('li', {});
         addPadLinkItem.appendChild( cozmanovaHelper.createElementWithAttributes('img', {
-          'src':'https://etherpad.conext.surfnetlabs.nl/eplconext/images/greenplus.png',
+          'src':'https://etherpad-groups.identitylabs.org/eplconext/images/greenplus.png',
           'height':'12px', 'style': 'margin-right:5px;'}) );
         
         addPadLinkItem.appendChild(addPadLink);
@@ -320,10 +355,9 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
     document.getElementById('main').appendChild(el);
   }
 
-
-
   // Set global groupname and then resume execution with f
   function doWithGroupname(f) {
+    /*
     if (groupcontext == null || groupcontext === '') {  // conext
       if (currentGroup == null || currentGroup === '') {  // userpref
         if (gadgCtx.is_conext_gadget) {
@@ -343,15 +377,26 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
         groupcontext = currentGroup;
       }
     }
-    
+    */
+    var mainDom = document.getElementById('main');
+    mainDom.innerHTML = "";
+    groupcontext = get_current_group();
+    groupname = get_current_group();
+    showOneSection('main');
+    gadgets.window.adjustHeight();
+    f();
     var p = {userId:'@owner', groupId: groupcontext};
-    
+    /*
     // set global groupname:
     osapi.groups.get({userId:'@owner', groupId: groupcontext}).execute(function(response) {
       result ='';
+      console.log(groupcontext);
+      console.log(response);
       for (item in response.list) {
-        if (response.list[item].id.groupId == groupcontext) {
+        if (response.list[item].id == groupcontext) {
           groupname = response.list[item].title;
+        } else {
+           //alert(groupcontext);
         }
       }
       
@@ -364,6 +409,7 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
         return;
       }
     });
+    */;
   } // doWithGroupname()
 
 
@@ -389,10 +435,12 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
     params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
 
     gadgets.io.makeRequest(url, function (response) {
+      console.log(response);
       if (response.oauthApprovalUrl) {
         // Create the popup handler. The onOpen function is called when the user
         // opens the popup window. The onClose function is called when the popup
         // window is closed.
+        console.log(response.oauthApprovalUrl);
         var popup = shindig.oauth.popup({
           destination: response.oauthApprovalUrl,
           windowOptions: null,
@@ -413,7 +461,7 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
       } else if (response.data) {
         showOneSection('main');
         // when conext-gadget: no team change allowed:
-        showHeader(! gadgCtx.is_conext_gadget); 
+        //showHeader(! gadgCtx.is_conext_gadget); 
         showList(response);
         jQInit(); // install click handlers
         
@@ -435,11 +483,18 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
   function makeBig(padname) {    
 	var canvas = new gadgets.views.View("canvas");
     var prefs = new gadgets.Prefs();
+    var groupnameArg = get_current_group();
+    prefs.set("groupnameParam", groupnameArg);;    
     prefs.set("padparam", padname);
-    
     console.log('Maximizing for pad '+padname);
+    console.log('Using group ' + get_current_group());
     
-    gadgets.views.requestNavigateTo(canvas);
+    var params = {
+        padparam : padname,
+        groupnameParam: groupnameArg
+    };
+
+    gadgets.views.requestNavigateTo(canvas,params);
   }
   
   
@@ -447,9 +502,22 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
     // execute everything after the user_id is set in context
     osapi.people.get({userId: '@owner'}).execute(function(result){
       if (!result.error) {
+    osapi.groups.get().execute(function(d) {
+        //clog("in get_user_groups():");
+        console.log(d);
+        $('#group_select').empty();
+        d.list.forEach(function(e) {
+            $('#group_select').append($('<option></option>')
+                .attr('value', e.id)
+                .text(e.title));
+        });
         user_id = result.id;
-        jQInit(); 
+        jQInit();
         doWithGroupname(fetchData);
+        $('#group_select').change(function() {
+    doWithGroupname(fetchData);    
+});
+    });
       }
       gadgets.window.adjustHeight();
     });
@@ -465,12 +533,12 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
   <Content type="html" view="canvas">
   <![CDATA[ 
   <div id="dEtherpadLite"></div>
-  <script src="https://etherpad.conext.surfnetlabs.nl/eplconext/gadget/h.js"></script>
+  <script src="https://etherpad-groups.identitylabs.org/eplconext/gadget/h.js"></script>
   <script type="text/javascript">
   
     // duplicated in each view:
     var gadgCtx = {
-      epl_baseurl: 'https://etherpad.conext.surfnetlabs.nl/eplconext/',
+      epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/',
 <?php 
 print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',');
 ?>      
@@ -484,6 +552,7 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
     var params = {};
     url = gadgCtx.epl_baseurl+'padmanager.php/padaccesstoken/'+escape(groupcontext) + '/' + escape(padid);
 
+    console.log(url);
     params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
     params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.OAUTH;
     params[gadgets.io.RequestParameters.OAUTH_SERVICE_NAME] = "EPLconext";
@@ -494,6 +563,7 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
         return;
       }
       
+      console.log(response);
       if (response.data) {
         var j = response.data.data;
         pat = j.padaccesstoken;
@@ -527,14 +597,27 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
 	prefs = new gadgets.Prefs();
 	groupcontext = prefs.getString('groupContext');
 	padname = prefs.getString("padparam");
+    groupname = prefs.getString("groupnameParam");
 	currentGroup = prefs.getString('currentGroup');  
-	  
+	
+    var prefs = gadgets.views.getParams();
+    groupname = prefs['groupnameParam'];
+    padname = prefs['padparam'];
+
+    console.log(padname);
+    console.log(groupname);
+    groupcontext = groupname;
+    currentGroup = groupname;
+
     if (gadgCtx.is_conext_gadget) {
 	  groupcontext = groupcontext;
 	} else {
 	  groupcontext = currentGroup;
 	}
     
+    console.log(groupcontext);
+    console.log(currentGroup);
+
     authorizeCanvasPad(padname);
   }
   

@@ -1,7 +1,7 @@
 <?php
 //require_once('osapi/osapi.php');
 /* SimpleSAMLphp */
-define('SIMPLESAML_PATH', '/var/www/simplesamlphp-1.10.0');
+define('SIMPLESAML_PATH', '/var/www/etherpad-groups/OpenConextApps-Etherpad/eplconext/simplesamlphp');
 require_once(SIMPLESAML_PATH . '/lib/_autoload.php');
 // force loading OAuth library:
 // new sspmod_oauth_OAuthServer();
@@ -13,8 +13,11 @@ require_once('GroupRel/_include.php');
 require_once('epl-client/etherpad-lite-client.php');
 
 class MyEtherpadLiteClient extends EtherpadLiteClient {
+
 	function __construct() {
 		parent::__construct(ETHERPADLITE_APIKEY, ETHERPADLITE_BASEURL);
+        error_log("API KEY: " . ETHERPADLITE_APIKEY);
+        error_log("URL: " . ETHERPADLITE_BASEURL);
 	}
 	
 	/**

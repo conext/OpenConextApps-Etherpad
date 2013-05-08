@@ -45,7 +45,7 @@ $osGroup->title = 'undefined';
 $osGroup->description = 'undefined';
 
 $groupInstance = Group::fromOsapi($osGroup);
-
+error_log("GROUP INSTANCE: " . var_export($groupInstance,true));
 $manager = new EPLc_Manager();
 // always explicitly set groupsession
 $manager->performParsed("groupsession", $userattributes, $groupInstance, array());
@@ -59,6 +59,7 @@ $oEPLclient = new MyEtherpadLiteClient();
 
 $userdata = $userattributes;
 $padurl = ETHERPADLITE_PADBASEURL . '/' . $active_pad;
+error_log("PAD URL: " . $padurl);
 $t = MyEtherpadLiteClient::splitGrouppadName($active_pad);
 $padname = $t[1];
 include("templates/show_pad.php");
