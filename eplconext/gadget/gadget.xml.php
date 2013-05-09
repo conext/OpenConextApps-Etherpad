@@ -63,7 +63,7 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
   <script src="https://etherpad-groups.identitylabs.org/eplconext/gadget/gs.js"></script>
   <link rel="stylesheet" type="text/css" href="https://etherpad-groups.identitylabs.org/eplconext/css/eplgadget.css" />
   
-    <div id="group_select_bar">
+    <div id="group_select_bar" style="display: none;">
         <label for="group_select">Group to view:</label>
         <select id="group_select">
             <option value="1000" selected>1000</option>
@@ -116,14 +116,14 @@ print('      is_conext_gadget : '. ($mode=='conext-native'?'true':'false') .',')
 
 function get_current_group() {
     /* temporary, current group ID should be moved into container */
-    var e = document.getElementById("group_select");
+   if (currentGroup) {
+        return currentGroup;
+   } else { 
+   var e = document.getElementById("group_select");
     var v = e.options[e.selectedIndex].value;   
-    return v;
-}
-
-function get_current_group_name() {
-    var group = get_current_group();
-    return group.title;
+    
+   return v;
+    }
 }
 
 function get_user_groups() {
@@ -499,6 +499,7 @@ function get_user_groups() {
   
   
   function gadgetLoaded() {
+
     // execute everything after the user_id is set in context
     osapi.people.get({userId: '@owner'}).execute(function(result){
       if (!result.error) {
@@ -513,10 +514,12 @@ function get_user_groups() {
         });
         user_id = result.id;
         jQInit();
-        doWithGroupname(fetchData);
-        $('#group_select').change(function() {
-    doWithGroupname(fetchData);    
-});
+        window.addEventListener("message", function(e){
+            currentGroup = e.data;
+            doWithGroupname(fetchData);
+        }, false);
+        top.postMessage("hello","http://portaldev.cloud.jiscadvance.biz");
+        //doWithGroupname(fetchData);
     });
       }
       gadgets.window.adjustHeight();
