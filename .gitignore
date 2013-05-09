@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 eplconext/storage/padaccesstoken.sqlite
 eplconext/simplesaml
 eplconext/simplesamlphp
-=======
 eplconext/simplesaml/*
 eplconext/simplesamlphp/*
->>>>>>> fda968f88d0157c31cc836d118aae763ad3bedcf
