@@ -25,7 +25,7 @@ header ("Content-Type:text/xml");
 print '<?xml version="1.0" encoding="UTF-8" ?>';
 ?>
 <Module>
-  <ModulePrefs title="EtherpadLite-SURFconext [<?php echo $mode;?>]" scrolling="true" height="640"
+  <ModulePrefs title="EtherpadLite" scrolling="true" height="640"
       author="mdobrinic"
       author_email="info@cozmanova.com"
       description="Etherpad Lite GroupPad gadget">
@@ -42,13 +42,6 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
         <Request url="https://etherpad-groups.identitylabs.org/simplesaml/module.php/oauth/requestToken.php" method="GET" /> 
         <Authorization url="https://etherpad-groups.identitylabs.org/simplesaml/module.php/oauth/authorize.php" /> 
       </Service>
-<?php if ($mode == 'opensocial-conext') { ?>      
-      <Service name="OSconext">
-        <Access url="https://os.dev.surfconext.nl/oauth/accessToken" method="GET" /> 
-        <Request url="https://os.dev.surfconext.nl/oauth/requestToken" method="GET" /> 
-        <Authorization url="https://os.dev.surfconext.nl/oauth/authorize" /> 
-      </Service>
-<?php } ?>      
     </OAuth>
   </ModulePrefs>
   <UserPref name="groupContext"/>
