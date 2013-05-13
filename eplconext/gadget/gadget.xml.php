@@ -31,9 +31,6 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
         </Service>
     </OAuth>
 </ModulePrefs>
-<UserPref name="groupContext"/>
-<UserPref name="groupName" datatype="string" display_name="Name of group" />
-<UserPref name="currentGroup" datatype="hidden" display_name="User selected group" />
 <UserPref name="padparam" datatype="hidden" />
 <Content type="html" view="default">
 <![CDATA[
@@ -42,14 +39,6 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
 <script src="https://etherpad-groups.identitylabs.org/eplconext/gadget/h.js"></script>
 <script src="https://etherpad-groups.identitylabs.org/eplconext/gadget/gs.js"></script>
 <link rel="stylesheet" type="text/css" href="https://etherpad-groups.identitylabs.org/eplconext/css/eplgadget.css" />
-
-<div id="group_select_bar" style="display: none;">
-    <label for="group_select">Group to view:</label>
-    <select id="group_select">
-        <option value="1000" selected>1000</option>
-        <option value="2000">2000</option>
-    </select>
-</div>
 
 <div id="main" style="display: none"></div>
 <div id="approval" style="display: none">
@@ -116,8 +105,6 @@ function showHeader(allowTeamChange) {
 
     dh.appendChild(document.createTextNode(' > '));
     dh.appendChild(document.createTextNode(groupname));
-
-
 
     document.getElementById("main").appendChild(dh);
 } //showHeader
@@ -195,8 +182,6 @@ function jQInit() {
         }
     });
 } // jQInit()
-
-
 
 // helper:
 function createNewPadNode(pad) {
@@ -306,62 +291,16 @@ function showBigMessage(msg, styleclass) {
 
 // Set global groupname and then resume execution with f
 function doWithGroupname(f) {
-    /*
-     if (groupcontext == null || groupcontext === '') {  // conext
-     if (currentGroup == null || currentGroup === '') {  // userpref
-     if (gadgCtx.is_conext_gadget) {
-     showBigMessage('You need to assign this tab to a team to make this gadget work.',
-     'noGroupContextError inline-error-message');
-     showOneSection('main');
-     gadgets.window.adjustHeight();
-     return;
-     } else {
-     // Render group selector in div#main
-     groupSelector.getUserGroups(document.getElementById('main'), externalProvider);
-     showOneSection('main');
-     gadgets.window.adjustHeight();
-     return;
-     }
-     } else {
-     groupcontext = currentGroup;
-     }
-     }
-     */
+
     var mainDom = document.getElementById('main');
     mainDom.innerHTML = "";
-    groupcontext = get_current_group();
-    groupname = get_current_group();
+    groupcontext = currentGroup;
+    groupname = currentGroup;
     showOneSection('main');
     gadgets.window.adjustHeight();
     f();
     var p = {userId:'@owner', groupId: groupcontext};
-    /*
-     // set global groupname:
-     osapi.groups.get({userId:'@owner', groupId: groupcontext}).execute(function(response) {
-     result ='';
-     console.log(groupcontext);
-     console.log(response);
-     for (item in response.list) {
-     if (response.list[item].id == groupcontext) {
-     groupname = response.list[item].title;
-     } else {
-     //alert(groupcontext);
-     }
-     }
-
-     if (groupname != '') {
-     f();
-     } else {
-     showBigMessage('Error when establishing groupname.', 'noGroupContextError inline-error-message');
-     showOneSection('main');
-     gadgets.window.adjustHeight();
-     return;
-     }
-     });
-     */;
 } // doWithGroupname()
-
-
 
 // Invoke makeRequest() to fetch data from the service provider endpoint.
 // Depending on the results of makeRequest, decide which version of the UI
