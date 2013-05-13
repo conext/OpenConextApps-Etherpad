@@ -67,6 +67,10 @@ var prefs = new gadgets.Prefs();
 groupcontext = prefs.getString('groupContext');
 currentGroup = prefs.getString('currentGroup');
 
+function clog(message) {
+    console.log("(*) Etherpad-Groups: " + message);
+}
+
 function get_current_group() {
     /* temporary, current group ID should be moved into container */
     if (currentGroup) {
@@ -279,7 +283,6 @@ function showList(result) {
     }
 }
 
-
 function showBigMessage(msg, styleclass) {
     var el = document.createElement('p');
     if (styleclass) {
@@ -432,15 +435,13 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
         epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/'
     };
 
-
-
     // Invoke makeRequest() to fetch a token that authorizes access to a given pad
     // OAuth has been setup by now because fetchData does this.
     function authorizeCanvasPad(padid) {
         var params = {};
         url = gadgCtx.epl_baseurl+'padmanager.php/padaccesstoken/'+escape(groupcontext) + '/' + escape(padid);
 
-        console.log(url);
+        clog('Accessing URL: ' + url);
         params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
         params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.OAUTH;
         params[gadgets.io.RequestParameters.OAUTH_SERVICE_NAME] = "EPLconext";
@@ -451,7 +452,6 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
                 return;
             }
 
-            console.log(response);
             if (response.data) {
                 var j = response.data.data;
                 pat = j.padaccesstoken;
@@ -461,7 +461,7 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
 
                 var ifr = cozmanovaHelper.createElementWithAttributes('iframe', {
                     'src':url,
-                    'frameborder':0, 'scrolling':'auto', 'width':'100%', 'height':'450px',
+                    'frameborder':0, 'scrolling':'auto', 'width':'100%', 'height':'600px'
                 });
 
                 document.getElementById('dEtherpadLite').appendChild(ifr);
@@ -481,37 +481,37 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
     var currentGroup;
 
     function gadgetLoaded() {
-        console.log('Canvas view executes gadgetLoaded()');
+        clog('Canvas view executes gadgetLoaded()');
+
         prefs = new gadgets.Prefs();
         groupcontext = prefs.getString('groupContext');
-        padname = prefs.getString("padparam");
-        groupname = prefs.getString("groupnameParam");
-        currentGroup = prefs.getString('currentGroup');
-
-        var prefs = gadgets.views.getParams();
-        groupname = prefs['groupnameParam'];
-        padname = prefs['padparam'];
-
-        console.log(padname);
-        console.log(groupname);
-        groupcontext = groupname;
-        currentGroup = groupname;
-
-        if (gadgCtx.is_conext_gadget) {
-            groupcontext = groupcontext;
-        } else {
-            groupcontext = currentGroup;
-        }
-
-        console.log(groupcontext);
-        console.log(currentGroup);
-
+//        padname = prefs.getString("padparam");
+//        groupname = prefs.getString("groupnameParam");
+//        currentGroup = prefs.getString('currentGroup');
+//
+//        var prefs = gadgets.views.getParams();
+//        groupname = prefs['groupnameParam'];
+//        padname = prefs['padparam'];
+//
+//        console.log(padname);
+//        console.log(groupname);
+//        groupcontext = groupname;
+//        currentGroup = groupname;
+//
+//        if (gadgCtx.is_conext_gadget) {
+//            groupcontext = groupcontext;
+//        } else {
+//            groupcontext = currentGroup;
+//        }
+//
+//        console.log(groupcontext);
+//        console.log(currentGroup);
+//
         authorizeCanvasPad(padname);
     }
 
-    console.log('Canvas view executes global script.');
+    clog('Canvas view executes global script.');
     gadgets.util.registerOnLoadHandler(gadgetLoaded);
-
 
 </script>
 
