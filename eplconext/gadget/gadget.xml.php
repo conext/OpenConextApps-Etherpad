@@ -487,15 +487,15 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
     function gadgetLoaded() {
         clog('Canvas view executes gadgetLoaded()');
 
-        prefs = new gadgets.Prefs();
-        groupcontext = prefs.getString('groupContext');
+//        prefs = new gadgets.Prefs();
+//        groupcontext = prefs.getString('groupContext');
 //        padname = prefs.getString("padparam");
 //        groupname = prefs.getString("groupnameParam");
 //        currentGroup = prefs.getString('currentGroup');
 //
-//        var prefs = gadgets.views.getParams();
-//        groupname = prefs['groupnameParam'];
-//        padname = prefs['padparam'];
+        var prefs = gadgets.views.getParams();
+        groupcontext = prefs['groupnameParam'];
+        padname = prefs['padparam'];
 //
 //        console.log(padname);
 //        console.log(groupname);
