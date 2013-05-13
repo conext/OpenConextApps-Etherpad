@@ -430,6 +430,10 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
     <script src="https://etherpad-groups.identitylabs.org/eplconext/gadget/h.js"></script>
 <script type="text/javascript">
 
+    function clog(message) {
+        console.log("(*) Etherpad-Groups: " + message);
+    }
+
     // duplicated in each view:
     var gadgCtx = {
         epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/'
@@ -511,6 +515,7 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
     }
 
     clog('Canvas view executes global script.');
+
     gadgets.util.registerOnLoadHandler(gadgetLoaded);
 
 </script>
