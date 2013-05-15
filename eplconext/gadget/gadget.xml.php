@@ -96,7 +96,7 @@ function showOneSection(toshow) {
 // delete pad
 // Invoke makeRequest() to fetch a token that authorizes access to a given pad
 // OAuth has been setup by now because fetchData does this.
-function deletePad(groupname, padid, onsuccessfunction) {
+function deletePad(groupname, padid, onsuccessfunction, xtra_argument) {
     var params = {};
     var url = gadgCtx.epl_baseurl+'padmanager.php/remove/'+ encodeURIComponent(groupname) + '/' + encodeURIComponent(padid);
 
@@ -231,6 +231,7 @@ function createNewPadNode(pad) {
     var removeImgNode = cozmanovaHelper.createElementWithAttributes('img', {
         'src': gadgCtx.epl_baseurl + 'images/redcross.png',
         'height':'12px', 'style': 'margin-right:5px;'});
+    var linkul = liNode.parentNode;
     removeImgNode.onclick = function() {
         // always: grouppad, so construct FQ padname:
         deletePad(pad.group_id, pad.name, function(container_element, padId) {
@@ -256,7 +257,7 @@ function createNewPadNode(pad) {
 
             jQInit();
             gadgets.window.adjustHeight();
-        });
+        },linkul);
     }
     liNode.appendChild(removeImgNode);
     return liNode;
