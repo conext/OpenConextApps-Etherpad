@@ -93,6 +93,33 @@ function showOneSection(toshow) {
     }
 }
 
+// delete pad
+// Invoke makeRequest() to fetch a token that authorizes access to a given pad
+// OAuth has been setup by now because fetchData does this.
+function deletePad(padid) {
+    var params = {};
+    url = gadgCtx.epl_baseurl+'padmanager.php/remove/'+escape(groupcontext) + '/' + escape(padid);
+
+    clog('Removing Pad using URL: ' + url);
+    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+    params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.OAUTH;
+    params[gadgets.io.RequestParameters.OAUTH_SERVICE_NAME] = "EPLconext";
+    params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
+    gadgets.io.makeRequest(url, function (response) {
+        if (response.oauthApprovalUrl) {
+            alert('OAuth not yet setup; flow error?');
+            return;
+        }
+
+        if (response.data) {
+            alert(response.data.data);
+        } else {
+            alert('text/data:' + response.text + '-/-' + response.data);
+        }
+    }, params);
+
+}
+
 // display [all teams]/[currentGroup]
 function showHeader(allowTeamChange) {
     var dh = cozmanovaHelper.createElementWithAttributes('div', {});
@@ -188,19 +215,27 @@ function jQInit() {
 function createNewPadNode(pad) {
     var s = pad.name;
     var liNode = document.createElement('li');
-    liNode.appendChild( cozmanovaHelper.createElementWithAttributes('img', {
+    var imgNode = cozmanovaHelper.createElementWithAttributes('img', {
         'src': gadgCtx.epl_baseurl + 'images/arrownext01.png',
-        'height':'12px', 'style': 'margin-right:5px;'}) );
+        'height':'12px', 'style': 'margin-right:5px;'});
+    liNode.appendChild(imgNode);
 
     var a = cozmanovaHelper.createElementWithAttributes('a', { 'href' : '#', 'class' : 'padnode' } );
     a.appendChild(document.createTextNode(s));
 
-    liNode.appendChild(a);
-    liNode.onclick = function() {
+    a.onclick = function() {
         // always: grouppad, so construct FQ padname:
         makeBig(pad.group_id+'$'+pad.name);
     }
-
+    liNode.appendChild(a);
+    var removeImgNode = cozmanovaHelper.createElementWithAttributes('img', {
+        'src': gadgCtx.epl_baseurl + 'images/redcross.png',
+        'height':'12px', 'style': 'margin-right:5px;'});
+    removeImgNode.onclick = function() {
+        // always: grouppad, so construct FQ padname:
+        deletePad(pad.group_id+'$'+pad.name);
+    }
+    liNode.appendChild(removeImgNode);
     return liNode;
 }
 
