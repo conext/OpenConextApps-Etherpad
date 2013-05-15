@@ -42,7 +42,7 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
 
 <div id="main" style="display: none"></div>
 <div id="approval" style="display: none">
-    <p>Give this gadget permission to use your personal and team information
+    <p>Give this gadget permission to use your personal and group information
         with Etherpad. Without this permission it is not possible to start and
         share pads. Your permission will be remembered for this gadget.</p>
     <a href="#" id="personalize">Personalize the gadget.</a>
@@ -53,19 +53,16 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
 <script type="text/javascript">
 
 // duplicated in each view:
+
 var gadgCtx = {
-    epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/'
+    epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/',
+    portal_baseurl: 'http://portaldev.cloud.jiscadvance.biz'
 }
 
 var user_id=''; // placeholder for user_id
 var groupcontext='';  // placeholder for groupcontext
 var groupname='';  // placeholder for groupname
 var currentGroup='';  //placeholder for currentGroup
-
-// Global initialization:
-var prefs = new gadgets.Prefs();
-groupcontext = prefs.getString('groupContext');
-currentGroup = prefs.getString('currentGroup');
 
 function clog(message) {
     console.log("(*) Etherpad-Groups: " + message);
@@ -116,7 +113,7 @@ function showHeader(allowTeamChange) {
 
 function callAddPad(groupname, newpadname, onsuccessfunction, xtra_argument) {
     var params = {};
-    var url = gadgCtx.epl_baseurl+'padmanager.php/remoteadd/' + encodeURIComponent(groupname) + '/' + encodeURIComponent(newpadname);
+    var url = gadgCtx.epl_baseurl + 'padmanager.php/remoteadd/' + encodeURIComponent(groupname) + '/' + encodeURIComponent(newpadname);
 
     params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
     params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.OAUTH;
@@ -124,7 +121,7 @@ function callAddPad(groupname, newpadname, onsuccessfunction, xtra_argument) {
     params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
 
     gadgets.io.makeRequest(url, function (response) {
-        console.log(response);
+        clog(response);
         if (response.oauthApprovalUrl) {
             alert('OAuth not yet setup; flow error?');
             return;
@@ -192,7 +189,7 @@ function createNewPadNode(pad) {
     var s = pad.name;
     var liNode = document.createElement('li');
     liNode.appendChild( cozmanovaHelper.createElementWithAttributes('img', {
-        'src':'https://etherpad-groups.identitylabs.org/eplconext/images/arrownext01.png',
+        'src': gadgCtx.epl_baseurl + 'images/arrownext01.png',
         'height':'12px', 'style': 'margin-right:5px;'}) );
 
     var a = cozmanovaHelper.createElementWithAttributes('a', { 'href' : '#', 'class' : 'padnode' } );
@@ -245,7 +242,7 @@ function showList(result) {
     } else {
         var pad;
         var listNode = cozmanovaHelper.createElementWithAttributes('ul', {
-            'style' : 'list-style: none;',
+            'style' : 'list-style: none;'
         });
 
         if (result.data.data.length > 0) {
@@ -272,7 +269,7 @@ function showList(result) {
         addPadLink.appendChild( document.createTextNode('Add new pad') );
         var addPadLinkItem=cozmanovaHelper.createElementWithAttributes('li', {});
         addPadLinkItem.appendChild( cozmanovaHelper.createElementWithAttributes('img', {
-            'src':'https://etherpad-groups.identitylabs.org/eplconext/images/greenplus.png',
+            'src': gadgCtx.epl_baseurl + 'images/greenplus.png',
             'height':'12px', 'style': 'margin-right:5px;'}) );
 
         addPadLinkItem.appendChild(addPadLink);
@@ -326,12 +323,12 @@ function fetchData() {
     params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
 
     gadgets.io.makeRequest(url, function (response) {
-        console.log(response);
+        clog(response);
         if (response.oauthApprovalUrl) {
             // Create the popup handler. The onOpen function is called when the user
             // opens the popup window. The onClose function is called when the popup
             // window is closed.
-            console.log(response.oauthApprovalUrl);
+            clog(response.oauthApprovalUrl);
             var popup = shindig.oauth.popup({
                 destination: response.oauthApprovalUrl,
                 windowOptions: null,
@@ -377,8 +374,8 @@ function makeBig(padname) {
     var groupnameArg = get_current_group();
     prefs.set("groupnameParam", groupnameArg);;
     prefs.set("padparam", padname);
-    console.log('Maximizing for pad '+padname);
-    console.log('Using group ' + get_current_group());
+    clog('Maximizing for pad '+padname);
+    clog('Using group ' + get_current_group());
 
     var params = {
         padparam : padname,
@@ -395,8 +392,7 @@ function gadgetLoaded() {
     osapi.people.get({userId: '@owner'}).execute(function(result){
         if (!result.error) {
             osapi.groups.get().execute(function(d) {
-                //clog("in get_user_groups():");
-                console.log(d);
+                clog(d);
                 $('#group_select').empty();
                 d.list.forEach(function(e) {
                     $('#group_select').append($('<option></option>')
@@ -409,8 +405,7 @@ function gadgetLoaded() {
                     currentGroup = e.data;
                     doWithGroupname(fetchData);
                 }, false);
-                top.postMessage("hello","http://portaldev.cloud.jiscadvance.biz");
-                //doWithGroupname(fetchData);
+                top.postMessage("update","http://portaldev.cloud.jiscadvance.biz");
             });
         }
         gadgets.window.adjustHeight();
@@ -436,7 +431,8 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
 
     // duplicated in each view:
     var gadgCtx = {
-        epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/'
+        epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/',
+        portal_baseurl: 'http://portaldev.cloud.jiscadvance.biz'
     };
 
     // Invoke makeRequest() to fetch a token that authorizes access to a given pad
@@ -487,30 +483,10 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
     function gadgetLoaded() {
         clog('Canvas view executes gadgetLoaded()');
 
-//        prefs = new gadgets.Prefs();
-//        groupcontext = prefs.getString('groupContext');
-//        padname = prefs.getString("padparam");
-//        groupname = prefs.getString("groupnameParam");
-//        currentGroup = prefs.getString('currentGroup');
-//
         var prefs = gadgets.views.getParams();
         groupcontext = prefs['groupnameParam'];
         padname = prefs['padparam'];
-//
-//        console.log(padname);
-//        console.log(groupname);
-//        groupcontext = groupname;
-//        currentGroup = groupname;
-//
-//        if (gadgCtx.is_conext_gadget) {
-//            groupcontext = groupcontext;
-//        } else {
-//            groupcontext = currentGroup;
-//        }
-//
-//        console.log(groupcontext);
-//        console.log(currentGroup);
-//
+
         authorizeCanvasPad(padname);
     }
 
