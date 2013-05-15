@@ -98,7 +98,7 @@ function showOneSection(toshow) {
 // OAuth has been setup by now because fetchData does this.
 function deletePad(padid) {
     var params = {};
-    url = gadgCtx.epl_baseurl+'padmanager.php/remove/'+escape(groupcontext) + '/' + escape(padid);
+    var url = gadgCtx.epl_baseurl+'padmanager.php/remove/'+ encodeURIComponent(groupname) + '/' + encodeURIComponent(padid);
 
     clog('Removing Pad using URL: ' + url);
     params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
