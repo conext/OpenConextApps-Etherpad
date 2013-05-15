@@ -172,7 +172,7 @@ function jQInit() {
         // container of group pads:
         var linkul = this.parentNode.parentNode;
 
-        var padname = prompt("Name for new pad in the group "+theid);
+        var padname = prompt("Name for new pad in the group " + groupname);
         if (padname == null) {
             // cancelled
         } else {
@@ -235,26 +235,6 @@ function createNewPadNode(pad) {
     removeImgNode.onclick = function() {
         // always: grouppad, so construct FQ padname:
         deletePad(groupname, pad.group_id + '$' + pad.name, function(container_element, padId) {
-            var padname;
-            p = padId.split('$');
-            if (p.length==1) { padname=p[0]; } else { padname=p[1]; }
-
-            var pad = {'name' : padname,
-                'group_id' : p[0]};
-
-            var c = container_element.children;
-            var i = c.length;
-            container_element.deleteCell(c[i-1]);
-
-            // unbind click handlers before re-setting for new element
-            $(".padhandled").unbind("click");
-
-            // disable no-pads-available:
-            var elnodocs=document.getElementById('elnodocs');
-            if (elnodocs) {
-                elnodocs.style.display = "none";
-            }
-
             jQInit();
             gadgets.window.adjustHeight();
         },linkul);
