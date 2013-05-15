@@ -96,7 +96,7 @@ function showOneSection(toshow) {
 // delete pad
 // Invoke makeRequest() to fetch a token that authorizes access to a given pad
 // OAuth has been setup by now because fetchData does this.
-function deletePad(padid) {
+function deletePad(groupname, padid, onsuccessfunction) {
     var params = {};
     var url = gadgCtx.epl_baseurl+'padmanager.php/remove/'+ encodeURIComponent(groupname) + '/' + encodeURIComponent(padid);
 
@@ -112,31 +112,14 @@ function deletePad(padid) {
         }
 
         if (response.data) {
-            alert(response.data.data);
+            var j = response.data.data;
+            onsuccessfunction(xtra_argument, j.padId);
         } else {
             alert('text/data:' + response.text + '-/-' + response.data);
         }
     }, params);
 
 }
-
-// display [all teams]/[currentGroup]
-function showHeader(allowTeamChange) {
-    var dh = cozmanovaHelper.createElementWithAttributes('div', {});
-    if (allowTeamChange) {
-        var allteams = cozmanovaHelper.createElementWithAttributes('a', { 'href':'#' });
-        allteams.appendChild( document.createTextNode('All teams') );
-        allteams.onclick=function(){ groupSelector.clearGroup(); };
-
-        dh.appendChild(allteams);
-    }
-
-    dh.appendChild(document.createTextNode(' > '));
-    dh.appendChild(document.createTextNode(groupname));
-
-    document.getElementById("main").appendChild(dh);
-} //showHeader
-
 
 function callAddPad(groupname, newpadname, onsuccessfunction, xtra_argument) {
     var params = {};
@@ -160,6 +143,23 @@ function callAddPad(groupname, newpadname, onsuccessfunction, xtra_argument) {
         }
     }, params);
 }
+
+// display [all teams]/[currentGroup]
+function showHeader(allowTeamChange) {
+    var dh = cozmanovaHelper.createElementWithAttributes('div', {});
+    if (allowTeamChange) {
+        var allteams = cozmanovaHelper.createElementWithAttributes('a', { 'href':'#' });
+        allteams.appendChild( document.createTextNode('All teams') );
+        allteams.onclick=function(){ groupSelector.clearGroup(); };
+
+        dh.appendChild(allteams);
+    }
+
+    dh.appendChild(document.createTextNode(' > '));
+    dh.appendChild(document.createTextNode(groupname));
+
+    document.getElementById("main").appendChild(dh);
+} //showHeader
 
 
 function jQInit() {
@@ -233,7 +233,30 @@ function createNewPadNode(pad) {
         'height':'12px', 'style': 'margin-right:5px;'});
     removeImgNode.onclick = function() {
         // always: grouppad, so construct FQ padname:
-        deletePad(pad.group_id+'$'+pad.name);
+        deletePad(pad.group_id, pad.name, function {
+            var padname;
+            p = padId.split('$');
+            if (p.length==1) { padname=p[0]; } else { padname=p[1]; }
+
+            var pad = {'name' : padname,
+                'group_id' : p[0]};
+
+            var c = container_element.children;
+            var i = c.length;
+            container_element.deleteCell(c[i-1]);
+
+            // unbind click handlers before re-setting for new element
+            $(".padhandled").unbind("click");
+
+            // disable no-pads-available:
+            var elnodocs=document.getElementById('elnodocs');
+            if (elnodocs) {
+                elnodocs.style.display = "none";
+            }
+
+            jQInit();
+            gadgets.window.adjustHeight();
+        });
     }
     liNode.appendChild(removeImgNode);
     return liNode;
