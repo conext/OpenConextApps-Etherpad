@@ -186,7 +186,7 @@ function jQInit() {
 
                     var pad = {'name' : padname,
                         'group_id' : p[0]};
-                    var newpadli = createNewPadNode(pad);
+                    var newpadli = createNewPadNode(pad, linkul);
 
                     var c = container_element.children;
                     var i = c.length;
@@ -212,7 +212,7 @@ function jQInit() {
 } // jQInit()
 
 // helper:
-function createNewPadNode(pad) {
+function createNewPadNode(pad,linkul) {
     var s = pad.name;
     var liNode = document.createElement('li');
     var imgNode = cozmanovaHelper.createElementWithAttributes('img', {
@@ -231,10 +231,12 @@ function createNewPadNode(pad) {
     var removeImgNode = cozmanovaHelper.createElementWithAttributes('img', {
         'src': gadgCtx.epl_baseurl + 'images/redcross.png',
         'height':'12px', 'style': 'margin-left:5px;'});
-    var linkul = liNode.parentNode;
     removeImgNode.onclick = function() {
         // always: grouppad, so construct FQ padname:
         deletePad(groupname, pad.group_id + '$' + pad.name, function(container_element, padId) {
+            var c = container_element.children;
+            var i = c.length;
+            container_element.deleteRow(c[i-1]);
             jQInit();
             gadgets.window.adjustHeight();
         },linkul);
