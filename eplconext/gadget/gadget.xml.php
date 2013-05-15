@@ -234,9 +234,7 @@ function createNewPadNode(pad) {
     var linkul = liNode.parentNode;
     removeImgNode.onclick = function() {
         // always: grouppad, so construct FQ padname:
-        clog(pad.group_id);
-        clog(pad.id)
-        deletePad(pad.group_id, pad.id, function(container_element, padId) {
+        deletePad(groupname, pad.name, function(container_element, padId) {
             var padname;
             p = padId.split('$');
             if (p.length==1) { padname=p[0]; } else { padname=p[1]; }
