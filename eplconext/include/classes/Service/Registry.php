@@ -11,7 +11,6 @@ class EPLc_Service_Registry {
 	static function lookup($name) {
 		/* for now, just perform static comparison */
 		if ($name == 'add' 
-				|| $name == 'remove' 
         || $name == 'groupsession'
         ) {
 //			return EPLc_Service_Def::create($name, true, 'OAuth', true);
@@ -20,6 +19,7 @@ class EPLc_Service_Registry {
 		} else if ($name == 'grouppadlist'
 		    || $name == 'padaccesstoken'
 		    || $name == 'remoteadd'
+            || $name == 'remove'
 		    ) {
 			$o = EPLc_Service_Def::create($name, true, 'OAuth', true,
 					EPLc_Service_Def::$GROUPNAME_FROM_URL, 

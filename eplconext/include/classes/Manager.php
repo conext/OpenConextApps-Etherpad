@@ -189,7 +189,7 @@ class EPLc_Manager {
 		if (isset($userdata['conext'])) {
 			$userId = $userdata['conext'];
 		} else {
-			$userId = $userdata['uid'];
+			$userId = $userdata['urn:mace:dir:attribute-def:eduPersonPrincipalName'];
 		}
 		if (is_array($userId)) { $userId = join(',', $userId); }
 		

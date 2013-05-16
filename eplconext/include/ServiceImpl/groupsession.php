@@ -12,6 +12,8 @@ class Service_groupsession extends EPLc_Service_IAbstractService {
 		$ep_group = $oEPLclient->createGroupIfNotExistsFor($groupinfo->_groupId['groupId']);
 		$ep_author = $oEPLclient->createAuthorIfNotExistsFor($userinfo->_userId, $userinfo->_userCommonName);
 		
+        error_log(var_export($ep_group,true));
+        error_log(var_export($ep_author,true));
 		$endtimestamp = time() + ETHERPADLITE_SESSION_DURATION;
 
 		$ep_session = $oEPLclient->createSession(

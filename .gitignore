@@ -1,4 +1,5 @@
 eplconext/storage/padaccesstoken.sqlite
+eplconext/storage/padowners.sqlite
 eplconext/simplesaml
 eplconext/simplesamlphp
 eplconext/simplesaml/*

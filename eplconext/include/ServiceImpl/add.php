@@ -16,9 +16,18 @@ class Service_add extends EPLc_Service_IAbstractService {
 		
 		$padname = $serviceargs[0];
 		$ep_group = $oEPLclient->createGroupIfNotExistsFor($groupinfo->_groupId);
-		
-		$ep_new_pad = $oEPLclient->createGroupPad($ep_group->groupID, $padname, "{$padname}\nThis is something that does not need to be typed.");
+	
+		$ep_new_pad = $oEPLclient->createGroupPad($ep_group->groupID, $padname, "{$padname}\n\nThis is a new group pad created using the JACSON portal.");
 		Logger_Log::debug("Created new GroupPad with id '{$ep_new_pad->padID}'", 'Service_add');
+
+        $storage = new EPLc_Storage('padowners');
+        $paddata = array(
+            'padId' => $ep_new_pad->padID,
+            'groupId' => $groupinfo->_groupId,
+            'userId' => $userinfo->_userId
+        );
+        error_log("Storing in DB: " . var_export($paddata,true));
+        $storage->set('paddata', $paddata['padId'], $paddata['userId'], $paddata);
 
 		$result = EPLc_Service_Response::create(true, "Pad created succesfully.");
 		$result->setData(array(

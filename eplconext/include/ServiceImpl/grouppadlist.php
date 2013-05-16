@@ -25,7 +25,10 @@ class Service_grouppadlist extends EPLc_Service_IAbstractService {
 		
 		$JSONpads = array();
 	
+        error_log(var_export($ep_group_pads,true));
 		foreach ($ep_group_pads->padIDs as $p => $v) {
+            error_log("PAD LIST:" . var_export($v,true));
+            
 			$o = new EPLc_Pad($v);
 			$JSONpads[] = $o->toJSONArray();
 		}

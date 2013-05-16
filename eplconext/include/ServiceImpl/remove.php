@@ -20,16 +20,32 @@ class Service_remove extends EPLc_Service_IAbstractService {
 		// $delete_padname = $ep_group->groupID . '$' . $padname;
 		$delete_padname = $padname;
 		
-		$ep_removed_pad = $oEPLclient->deletePad($delete_padname);
-		
-		Logger_Log::debug("Deleted GroupPad with id '{$ep_new_pad->padID}'", 'Service_remove');
+        /*
+         * Check if the user is the owner of the PAD
+         */
+        
+        $storage = new EPLc_Storage('padowners');
+        error_log("Removing pad: " . $padname);
+        error_log("User id: " . $userinfo->_userId);
+        error_log("USERINFO: " . var_export($userinfo,true));        
 
-		$result = EPLc_Service_Response::create(true, "Pad removed succesfully.");
-		$result->setData(array(
-				'padId' => $delete_padname,
-			));
+        $is_owner = $storage->exists('paddata', $padname, $userinfo->_userId);
+        error_log($is_owner ? 'true' : 'false');
+        if (!$is_owner) {
+            $result = EPLc_Service_Response::create(false, "Unable to delete pad.");
+            return $result;
+        } else {
+    		$ep_removed_pad = $oEPLclient->deletePad($delete_padname);
+	        $storage->remove('paddata',$padname,$userinfo->_userId);	
+		    Logger_Log::debug("Deleted GroupPad with id '{$ep_new_pad->padID}'", 'Service_remove');
+
+		    $result = EPLc_Service_Response::create(true, "Pad removed succesfully.");
+		    $result->setData(array(
+		    		'padId' => $delete_padname,
+			    ));
 		
-		return $result;
+		    return $result;
+        }
 	}
 	
 	
