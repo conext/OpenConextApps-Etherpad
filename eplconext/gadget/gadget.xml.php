@@ -234,9 +234,9 @@ function createNewPadNode(pad,linkul) {
     removeImgNode.onclick = function() {
         // always: grouppad, so construct FQ padname:
         deletePad(groupname, pad.group_id + '$' + pad.name, function(container_element, padId) {
-            var c = container_element.children;
-            var i = c.length;
-            container_element.deleteRow(c[i-1]);
+//            var c = container_element.children;
+//            var i = c.length;
+//            container.(c[i-1]);
             jQInit();
             gadgets.window.adjustHeight();
         },linkul);
