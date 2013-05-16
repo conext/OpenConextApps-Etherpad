@@ -265,7 +265,7 @@ function showList(result) {
         mainList.innerHTML = "";
     }
 
-    var headerElement = document.createElementWithAttributes('h3', {
+    var headerElement = cozmanovaHelper.createElementWithAttributes('h3', {
         'id' : 'mainList'
     });
     var nameNode;
