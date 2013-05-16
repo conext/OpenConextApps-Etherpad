@@ -26,7 +26,6 @@ class Service_add extends EPLc_Service_IAbstractService {
             'groupId' => $groupinfo->_groupId,
             'userId' => $userinfo->_userId
         );
-        Logger_Log::debug("Storing in DB");
         $storage->set('paddata', $paddata['padId'], $paddata['userId'], $paddata);
 
 		$result = EPLc_Service_Response::create(true, "Pad created succesfully.");
