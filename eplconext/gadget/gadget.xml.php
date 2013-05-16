@@ -50,6 +50,8 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
 <div id="waiting" style="display: none">Please click <a href="#" id="approvaldone">I've approved access</a>
     once you've approved access to your data.</div>
 
+<div id="group_waiting" style="display: none">Your group information is being loaded.</div>
+
 <script type="text/javascript">
 
 // duplicated in each view:
@@ -74,7 +76,7 @@ function get_current_group() {
 
 // Helper for UI, facilitating OAuth setup
 function showOneSection(toshow) {
-    var sections = [ 'main', 'approval', 'waiting' ];
+    var sections = [ 'main', 'approval', 'waiting', 'group_waiting' ];
     for (var i=0; i < sections.length; ++i) {
         var s = sections[i];
         var el = document.getElementById(s);
@@ -434,12 +436,6 @@ function gadgetLoaded() {
         if (!result.error) {
             osapi.groups.get().execute(function(d) {
                 clog(d);
-                $('#group_select').empty();
-                d.list.forEach(function(e) {
-                    $('#group_select').append($('<option></option>')
-                        .attr('value', e.id)
-                        .text(e.title));
-                });
                 user_id = result.id;
                 jQInit();
                 window.addEventListener("message", function(e){
@@ -447,6 +443,7 @@ function gadgetLoaded() {
                     doWithGroupname(fetchData);
                 }, false);
                 top.postMessage("update","http://portaldev.cloud.jiscadvance.biz");
+                showOneSection('group_waiting');
             });
         }
         gadgets.window.adjustHeight();
