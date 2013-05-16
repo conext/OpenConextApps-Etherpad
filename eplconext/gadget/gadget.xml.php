@@ -260,7 +260,14 @@ function createNewPadNode(pad,linkul) {
 // result is either 'OK','NOGROUP','ERROR'
 function showList(result) {
     var l = '- unprocessed list -';
-    var headerElement = document.createElement('h3');
+    var mainList = document.getElementById("mainList");
+    if (mainList) {
+        mainList.innerHTML = "";
+    }
+
+    var headerElement = document.createElementWithAttributes('h3', {
+        'id' : 'mainList'
+    );
     var nameNode;
 
     if (result.data.result=='ERROR') {

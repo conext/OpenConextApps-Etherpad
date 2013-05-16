@@ -32,8 +32,6 @@ class Service_grouppadlist extends EPLc_Service_IAbstractService {
 			$o = new EPLc_Pad($v);
 			$JSONpads[] = $o->toJSONArray();
 		}
-		
-		Logger_Log::debug("Created new session with id '{$sID}'", 'Service_groupsession');
 
         error_log(var_export($JSONpads,true));
 		$result = EPLc_Service_Response::create(true, "Padlist retrieved; (" . count($JSONpads) . ") pads");
