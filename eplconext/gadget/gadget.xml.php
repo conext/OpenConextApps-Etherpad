@@ -230,15 +230,13 @@ function createNewPadNode(pad,linkul) {
     liNode.appendChild(a);
     var removeImgNode = cozmanovaHelper.createElementWithAttributes('img', {
         'src': gadgCtx.epl_baseurl + 'images/redcross.png',
-        'height':'12px', 'style': 'margin-left:5px;'});
+        'height':'12px', 'style': 'margin-left: 10px;'});
     removeImgNode.onclick = function() {
         // always: grouppad, so construct FQ padname:
         deletePad(groupname, pad.group_id + '$' + pad.name, function(container_element, padId) {
-//            var c = container_element.children;
-//            var i = c.length;
-//            container.(c[i-1]);
-            jQInit();
-            gadgets.window.adjustHeight();
+            fetchData();
+//            jQInit();
+//            gadgets.window.adjustHeight();
         },linkul);
     }
     liNode.appendChild(removeImgNode);
