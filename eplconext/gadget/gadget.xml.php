@@ -69,14 +69,7 @@ function clog(message) {
 }
 
 function get_current_group() {
-    /* temporary, current group ID should be moved into container */
-    if (currentGroup) {
-        return currentGroup;
-    } else {
-        var e = document.getElementById("group_select");
-        return e.options[e.selectedIndex].value;
-
-    }
+    return currentGroup;
 }
 
 // Helper for UI, facilitating OAuth setup
@@ -233,11 +226,13 @@ function createNewPadNode(pad,linkul) {
         'height':'12px', 'style': 'margin-left: 10px;'});
     removeImgNode.onclick = function() {
         // always: grouppad, so construct FQ padname:
-        deletePad(groupname, pad.group_id + '$' + pad.name, function(container_element, padId) {
-            fetchData();
+        if(confirm("Confirm that you want to delete PAD: " + pad.name)) {
+            deletePad(groupname, pad.group_id + '$' + pad.name, function(container_element, padId) {
+                fetchData();
 //            jQInit();
 //            gadgets.window.adjustHeight();
-        },linkul);
+            },linkul);
+        }
     }
     liNode.appendChild(removeImgNode);
     return liNode;
