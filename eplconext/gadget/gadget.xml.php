@@ -267,7 +267,7 @@ function showList(result) {
 
     var headerElement = document.createElementWithAttributes('h3', {
         'id' : 'mainList'
-    );
+    });
     var nameNode;
 
     if (result.data.result=='ERROR') {
