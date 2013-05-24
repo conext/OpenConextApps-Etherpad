@@ -3,24 +3,24 @@
 
 
 h3 {
-	font-family: 'Open Sans',Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.0em;
+    font-family: 'Open Sans',Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.0em;
 }
 
 ul {
-	font-family: 'Open Sans', Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 0.8em;
+    font-family: 'Open Sans', Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 0.8em;
 }
 
 .inline-error-message {
-margin: 0;
-padding: 10px;
-background: #C5EFFE;
+    margin: 0;
+    padding: 10px;
+    background: #C5EFFE;
 }
 
 #splash {
     background-image: url('https://twitter.com/images/resources/twitter-bird-white-on-blue.png');
     background-repeat: no-repeat;
     background-position: center center;
-    background-color: #00abf0;
+    background-color: #1e3e73;
     height: 100%;
     width: 100%;
 }
@@ -46,7 +46,7 @@ background: #C5EFFE;
 }
 
 #etherpadbar {
-    background-color: #21759b;
+    background-color: #1e3e73;
     background-image: url('http://s.wordpress.org/about/images/logos/wordpress-logo-32-blue.png');
     background-size: 24px 24px;
     background-position: 3px center;
