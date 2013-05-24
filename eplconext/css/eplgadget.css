@@ -17,7 +17,7 @@ ul {
 }
 
 #splash {
-    background-image: url('https://twitter.com/images/resources/twitter-bird-white-on-blue.png');
+    background-image: url('https://etherpad-groups.identitylabs.org/eplconext/css/img/etherpad-icon.png');
     background-repeat: no-repeat;
     background-position: center center;
     background-color: #1e3e73;
@@ -47,7 +47,7 @@ ul {
 
 #etherpadbar {
     background-color: #1e3e73;
-    background-image: url('http://s.wordpress.org/about/images/logos/wordpress-logo-32-blue.png');
+    background-image: url('https://etherpad-groups.identitylabs.org/eplconext/css/img/etherpad-icon.png');
     background-size: 24px;
     background-position: 3px center;
     background-repeat: no-repeat;
