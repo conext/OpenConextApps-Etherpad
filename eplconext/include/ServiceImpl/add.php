@@ -26,6 +26,13 @@ class Service_add extends EPLc_Service_IAbstractService {
             'groupId' => $groupinfo->_groupId,
             'userId' => $userinfo->_userId
         );
+
+        $already_exists = $storage->exists('paddata', $paddata['padId'], $paddata['userId']);
+        if ($already_exists) {
+            error_log("Pad must have been removed by the admin. Removing previous owner.");
+            $storage->remove('paddata', $paddata['padId'], $paddata['userId']);
+        }
+
         $storage->set('paddata', $paddata['padId'], $paddata['userId'], $paddata);
 
 		$result = EPLc_Service_Response::create(true, "Pad created succesfully.");
