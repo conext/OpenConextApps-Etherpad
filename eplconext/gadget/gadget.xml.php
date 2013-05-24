@@ -120,9 +120,9 @@ function deletePad(groupname, padid, onsuccessfunction, xtra_argument) {
             alert('OAuth not yet setup; flow error?');
             return;
         }
-
         if (response.data) {
             var j = response.data.data;
+            clog(response);
             onsuccessfunction(xtra_argument, j.padId);
         } else {
             alert('text/data:' + response.text + '-/-' + response.data);
@@ -246,8 +246,7 @@ function createNewPadNode(pad,linkul) {
         if(confirm("Confirm that you want to delete PAD: " + pad.name)) {
             deletePad(groupname, pad.group_id + '$' + pad.name, function(container_element, padId) {
                 fetchData();
-//            jQInit();
-//            gadgets.window.adjustHeight();
+                clo
             },linkul);
         }
     }
