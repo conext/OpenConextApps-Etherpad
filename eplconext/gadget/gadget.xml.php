@@ -469,10 +469,9 @@ function gadgetLoaded() {
                     if (e.data) {
                         currentGroup = e.data;
                         doWithGroupname(fetchData);
-                        decommission_splash();
                     } else {
                         clog("No group.");
-                        messagebox('No group selected.', 'Weird, I couldn\'t get your current group.');
+                        messagebox('No group selected.', 'Please select a group to work with this application.');
                     }
 
                 }, false);
@@ -480,6 +479,7 @@ function gadgetLoaded() {
             });
         }
         gadgets.window.adjustHeight();
+        decommission_splash();
     });
 }
 
