@@ -46,7 +46,7 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
 
 <div id="content">
 <div id="etherpadbar">
-    <img src="https://twitter.com/images/resources/twitter-bird-dark-bgs.png">
+    &nbsp;
 </div>
 <div id="main" style="display: none"></div>
 <div id="approval" style="display: none">
