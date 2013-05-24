@@ -88,7 +88,7 @@ function get_current_group() {
 
 // Helper for UI, facilitating OAuth setup
 function showOneSection(toshow) {
-    var sections = [ 'main', 'approval', 'waiting', 'group_waiting' ];
+    var sections = [ 'main', 'approval', 'waiting'];
     for (var i=0; i < sections.length; ++i) {
         var s = sections[i];
         var el = document.getElementById(s);
