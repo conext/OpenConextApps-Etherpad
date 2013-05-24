@@ -10,7 +10,9 @@ class Service_groupsession extends EPLc_Service_IAbstractService {
 		$oEPLclient = new EtherpadLiteClient(ETHERPADLITE_APIKEY, ETHERPADLITE_BASEURL);
 		
 		$ep_group = $oEPLclient->createGroupIfNotExistsFor($groupinfo->_groupId['groupId']);
-		$ep_author = $oEPLclient->createAuthorIfNotExistsFor($userinfo->_userId, $userinfo->_userCommonName);
+        error_log("USERINFO->USERID: " . $userinfo->_userId);
+        error_log("USERINFO->COMMONNAME: " . $userinfo->_userCommonName);
+        $ep_author = $oEPLclient->createAuthorIfNotExistsFor($userinfo->_userId, $userinfo->_userCommonName);
 		
         error_log(var_export($ep_group,true));
         error_log(var_export($ep_author,true));
