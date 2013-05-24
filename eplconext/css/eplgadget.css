@@ -1,15 +1,30 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400&subset=latin,latin-ext,cyrillic-ext);
 @CHARSET "UTF-8";
 
+
 h3 {
-	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.1em;
+	font-family: 'Open Sans',Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.1em;
 }
 
 ul {
-	font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 0.8em;
+	font-family: 'Open Sans', Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 0.8em;
 }
 
 .inline-error-message {
 margin: 0;
 padding: 10px;
 background: #C5EFFE;
+}
+
+#splash {
+    background-image: url('https://twitter.com/images/resources/twitter-bird-white-on-blue.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #00abf0;
+    height: 100%;
+    width: 100%;
+}
+
+#content {
+    display: none;
 }

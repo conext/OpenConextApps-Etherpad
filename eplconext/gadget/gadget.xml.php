@@ -40,6 +40,11 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
 <script src="https://etherpad-groups.identitylabs.org/eplconext/gadget/gs.js"></script>
 <link rel="stylesheet" type="text/css" href="https://etherpad-groups.identitylabs.org/eplconext/css/eplgadget.css" />
 
+<div id="splash">
+    &nbsp;
+</div>
+
+<div id="content">
 <div id="main" style="display: none"></div>
 <div id="approval" style="display: none">
     <p>Give this gadget permission to use your personal and group information
@@ -51,6 +56,7 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
     once you've approved access to your data.</div>
 
 <div id="group_waiting" style="display: none">Your group information is being loaded.</div>
+</div>
 
 <script type="text/javascript">
 
@@ -428,6 +434,18 @@ function makeBig(padname) {
     gadgets.views.requestNavigateTo(canvas,params);
 }
 
+function decommission_splash() {
+    $('#splash').css('display', 'none');
+    $('#content').css('display', 'block');
+}
+
+function messagebox(message, description) {
+    decommission_splash();
+    $('#feed').hide();
+    $('#messagebox').show();
+    $('#mbox_title').text(message);
+    $('#mbox_description').html(description);
+}
 
 function gadgetLoaded() {
 
@@ -439,8 +457,14 @@ function gadgetLoaded() {
                 user_id = result.id;
                 jQInit();
                 window.addEventListener("message", function(e){
-                    currentGroup = e.data;
-                    doWithGroupname(fetchData);
+                    if (e.data) {
+                        currentGroup = e.data;
+                        doWithGroupname(fetchData);
+                    } else {
+                        clog("No group.");
+                        messagebox('No group selected.', 'Weird, I couldn\'t get your current group.');
+                    }
+
                 }, false);
                 top.postMessage("update","http://portaldev.cloud.jiscadvance.biz");
                 showOneSection('group_waiting');
