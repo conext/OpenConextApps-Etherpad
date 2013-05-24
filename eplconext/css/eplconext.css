@@ -118,5 +118,18 @@ ul.ulPadList { font-size: 0.8em; }
 	width: 100%;
 	height: 100%;
 }
+
+#etherpadbar {
+    background-color: #9AE4E8;
+    min-height: 20px;
+    color: #fff;
+}
+
+#etherpadbar img {
+    width: 30px;
+    height: 30px;
+    display: block;
+    float: left;
+}
 	
 
