@@ -121,7 +121,7 @@ function deletePad(groupname, padid, onsuccessfunction, xtra_argument) {
             return;
         }
         if (response.data) {
-            if (data.result.error == "ERROR") {
+            if (data.result == "ERROR") {
                 alert('Only owner can delete a pad.');
             } else {
                 var j = response.data.data;
