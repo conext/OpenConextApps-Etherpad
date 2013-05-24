@@ -121,9 +121,13 @@ function deletePad(groupname, padid, onsuccessfunction, xtra_argument) {
             return;
         }
         if (response.data) {
-            var j = response.data.data;
-            clog(response);
-            onsuccessfunction(xtra_argument, j.padId);
+            if (data.result.error == "ERROR") {
+                alert('Only owner can delete a pad.');
+            } else {
+                var j = response.data.data;
+                onsuccessfunction(xtra_argument, j.padId);
+            }
+
         } else {
             alert('text/data:' + response.text + '-/-' + response.data);
         }
