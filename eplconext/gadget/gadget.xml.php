@@ -460,6 +460,7 @@ function gadgetLoaded() {
                     if (e.data) {
                         currentGroup = e.data;
                         doWithGroupname(fetchData);
+                        decommission_splash();
                     } else {
                         clog("No group.");
                         messagebox('No group selected.', 'Weird, I couldn\'t get your current group.');
