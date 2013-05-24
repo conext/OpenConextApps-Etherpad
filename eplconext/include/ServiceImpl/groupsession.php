@@ -11,9 +11,9 @@ class Service_groupsession extends EPLc_Service_IAbstractService {
 		
 		$ep_group = $oEPLclient->createGroupIfNotExistsFor($groupinfo->_groupId['groupId']);
         error_log("USERINFO: " . var_export($userinfo,true));
-        error_log("USERINFO->USERID: " . $userinfo->_userId);
-        error_log("USERINFO->COMMONNAME: " . $userinfo->_userCommonName);
-        $ep_author = $oEPLclient->createAuthorIfNotExistsFor($userinfo->_userData->_userId, $userinfo->_userData->_userCommonName);
+        error_log("USERINFO->USERID: " . $userinfo->_userdata->_userId);
+        error_log("USERINFO->COMMONNAME: " . $userinfo->_userdata->_userCommonName);
+        $ep_author = $oEPLclient->createAuthorIfNotExistsFor($userinfo->_userdata->_userId, $userinfo->_userdata->_userCommonName);
 		
         error_log(var_export($ep_group,true));
         error_log(var_export($ep_author,true));
