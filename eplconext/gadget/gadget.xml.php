@@ -55,7 +55,13 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
 <div id="waiting" style="display: none">Please click <a href="#" id="approvaldone">I've approved access</a>
     once you've approved access to your data.</div>
 
-<div id="group_waiting" style="display: none">Your group information is being loaded.</div>
+<div id="messagebox">
+    <div id="mbox_title">
+        _
+    </div>
+    <div id="mbox_description">
+        _
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -468,7 +474,6 @@ function gadgetLoaded() {
 
                 }, false);
                 top.postMessage("update","http://portaldev.cloud.jiscadvance.biz");
-                showOneSection('group_waiting');
             });
         }
         gadgets.window.adjustHeight();

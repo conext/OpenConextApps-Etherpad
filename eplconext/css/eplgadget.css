@@ -28,3 +28,19 @@ background: #C5EFFE;
 #content {
     display: none;
 }
+
+#messagebox {
+    margin-top: 50px;
+    text-align: center;
+    display: none;
+}
+
+#mbox_description {
+    font-family: 'Open Sans', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+}
+
+#mbox_title {
+    font-family: 'Open Sans', sans-serif;
+}
