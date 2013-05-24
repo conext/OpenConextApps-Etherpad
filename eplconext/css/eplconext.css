@@ -102,8 +102,6 @@ ul.nice-list li .right {color: #999;}
 /*// a.cPadLink { font-size: 0.8em; }*/
 ul.ulPadList { font-size: 0.8em; }
 
-
-
 /* header positions */
 .header {
 	position: absolute;
@@ -119,12 +117,5 @@ ul.ulPadList { font-size: 0.8em; }
 	height: 100%;
 }
 
-#etherpadbar {
-    background-color: #21759b;
-    background-image: url('http://s.wordpress.org/about/images/logos/wordpress-logo-32-blue.png');
-    background-size: 24px 24px;
-    background-position: 3px center;
-    background-repeat: no-repeat;
-    min-height: 32px;
-}
+
 

@@ -44,3 +44,12 @@ background: #C5EFFE;
 #mbox_title {
     font-family: 'Open Sans', sans-serif;
 }
+
+#etherpadbar {
+    background-color: #21759b;
+    background-image: url('http://s.wordpress.org/about/images/logos/wordpress-logo-32-blue.png');
+    background-size: 24px 24px;
+    background-position: 3px center;
+    background-repeat: no-repeat;
+    min-height: 32px;
+}
