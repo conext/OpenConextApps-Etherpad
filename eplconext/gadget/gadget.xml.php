@@ -12,7 +12,7 @@ header ("Content-Type:text/xml");
 print '<?xml version="1.0" encoding="UTF-8" ?>';
 ?>
 <Module>
-<ModulePrefs title="EtherpadLite" scrolling="true" height="640"
+<ModulePrefs title="EtherpadLite" scrolling="true" height="800"
              author="mdobrinic"
              author_email="info@cozmanova.com"
              description="Etherpad Lite GroupPad gadget">
