@@ -128,8 +128,6 @@ ul.ulPadList { font-size: 0.8em; }
 #etherpadbar img {
     width: 30px;
     height: 30px;
-    display: block;
-    float: left;
 }
 
 .clearfix {
