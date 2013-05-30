@@ -409,6 +409,7 @@ function fetchData() {
             showOneSection('main');
             // when conext-gadget: no team change allowed:
             //showHeader(! gadgCtx.is_conext_gadget);
+            clog(response.data)
             showList(response);
             jQInit(); // install click handlers
 
