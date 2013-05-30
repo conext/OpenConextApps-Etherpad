@@ -352,10 +352,9 @@ function showBigMessage(msg, styleclass) {
 
 // Set global groupname and then resume execution with f
 function doWithGroupname(f) {
-
-    showOneSection('main');
     gadgets.window.adjustHeight();
     f();
+    var p = {userId:'@owner', groupId: groupcontext};
 } // doWithGroupname()
 
 // Invoke makeRequest() to fetch data from the service provider endpoint.
