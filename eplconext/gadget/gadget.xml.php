@@ -289,8 +289,7 @@ function showList(result) {
     } else if (result.data.result=='NOGROUP') {
         nameNode = document.createTextNode('Tab is not assigned to a team.');
     } else {
-        nameNode = document.createTextNode('Select an existing pad to edit this'+
-            ' document in a maximized gadget window');
+        nameNode = document.createTextNode('Select pad to edit this document in a maximized gadget window');
     }
 
     headerElement.appendChild(nameNode);
@@ -406,8 +405,6 @@ function fetchData() {
             groupcontext = currentGroup;
             groupname = currentGroup;
             showOneSection('main');
-            // when conext-gadget: no team change allowed:
-            //showHeader(! gadgCtx.is_conext_gadget);
             clog("Response data: " + response.data);
             decommission_splash();
             showList(response);
