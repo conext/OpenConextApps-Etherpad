@@ -73,7 +73,7 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
 
 var gadgCtx = {
     epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/',
-    portal_baseurl: 'http://portaldev.cloud.jiscadvance.biz'
+    portal_baseurl: top.location.origin
 }
 
 var user_id=''; // placeholder for user_id
@@ -481,7 +481,7 @@ function gadgetLoaded() {
                     }
 
                 }, false);
-                top.postMessage("update","http://portaldev.cloud.jiscadvance.biz");
+                top.postMessage("update",top.location.origin);
             });
         }
         gadgets.window.adjustHeight();
@@ -509,7 +509,7 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
     // duplicated in each view:
     var gadgCtx = {
         epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/',
-        portal_baseurl: 'http://portaldev.cloud.jiscadvance.biz'
+        portal_baseurl: top.location.origin
     };
 
     // Invoke makeRequest() to fetch a token that authorizes access to a given pad
