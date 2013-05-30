@@ -353,7 +353,6 @@ function showBigMessage(msg, styleclass) {
 function doWithGroupname(f) {
     groupcontext = currentGroup;
     groupname = currentGroup;
-    gadgets.window.adjustHeight();
     f();
     var p = {userId:'@owner', groupId: groupcontext};
 } // doWithGroupname()
@@ -410,7 +409,7 @@ function fetchData() {
             decommission_splash();
             showList(response);
             jQInit(); // install click handlers
-
+            gadgets.window.adjustHeight();
         } else {
             alert('text/data:' + response.text + '-/-' + response.data);
             // The response.oauthError and response.oauthErrorText values may help debug
