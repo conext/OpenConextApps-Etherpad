@@ -250,7 +250,6 @@ function createNewPadNode(pad,linkul) {
         if(confirm("Confirm that you want to delete PAD: " + pad.name)) {
             deletePad(groupname, pad.group_id + '$' + pad.name, function(container_element, padId) {
                 fetchData();
-                clo
             },linkul);
         }
     }
@@ -409,7 +408,7 @@ function fetchData() {
             showOneSection('main');
             // when conext-gadget: no team change allowed:
             //showHeader(! gadgCtx.is_conext_gadget);
-            clog(response.data)
+            clog("Response data: " + response.data)
             showList(response);
             jQInit(); // install click handlers
 
