@@ -351,6 +351,8 @@ function showBigMessage(msg, styleclass) {
 
 // Set global groupname and then resume execution with f
 function doWithGroupname(f) {
+    groupcontext = currentGroup;
+    groupname = currentGroup;
     gadgets.window.adjustHeight();
     f();
     var p = {userId:'@owner', groupId: groupcontext};
@@ -403,8 +405,6 @@ function fetchData() {
         } else if (response.data) {
             var mainDom = document.getElementById('main');
             mainDom.innerHTML = "";
-            groupcontext = currentGroup;
-            groupname = currentGroup;
             showOneSection('main');
             clog("Response data: " + response.data);
             decommission_splash();
