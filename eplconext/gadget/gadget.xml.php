@@ -472,6 +472,10 @@ function gadgetLoaded() {
                     if (e.data) {
                         currentGroup = e.data;
                         doWithGroupname(fetchData);
+                        setInterval(function() {
+                            clog("15 seconds up. Updating feed.");
+                            doWithGroupname(fetchData);
+                        }, 15000);
                     } else {
                         clog("No group.");
                         messagebox('No group selected.', 'Please select a group to work with this application.');
