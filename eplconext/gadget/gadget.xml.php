@@ -353,14 +353,9 @@ function showBigMessage(msg, styleclass) {
 // Set global groupname and then resume execution with f
 function doWithGroupname(f) {
 
-    var mainDom = document.getElementById('main');
-    mainDom.innerHTML = "";
-    groupcontext = currentGroup;
-    groupname = currentGroup;
     showOneSection('main');
     gadgets.window.adjustHeight();
     f();
-    var p = {userId:'@owner', groupId: groupcontext};
 } // doWithGroupname()
 
 // Invoke makeRequest() to fetch data from the service provider endpoint.
@@ -408,6 +403,10 @@ function fetchData() {
             approvaldone.onclick = popup.createApprovedOnClick();
             showOneSection('approval');
         } else if (response.data) {
+            var mainDom = document.getElementById('main');
+            mainDom.innerHTML = "";
+            groupcontext = currentGroup;
+            groupname = currentGroup;
             showOneSection('main');
             // when conext-gadget: no team change allowed:
             //showHeader(! gadgCtx.is_conext_gadget);
