@@ -273,6 +273,7 @@ function createNewPadNode(pad,linkul) {
 // }
 // result is either 'OK','NOGROUP','ERROR'
 function showList(result) {
+    clog("Processing list.");
     var l = '- unprocessed list -';
     var mainList = document.getElementById("main");
     if (mainList) {
