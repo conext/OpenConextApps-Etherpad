@@ -241,7 +241,7 @@ function createNewPadNode(pad,linkul) {
 //        // always: grouppad, so construct FQ padname:
 //        makeBig(pad.group_id+'$'+pad.name);
 //    }
-//    liNode.appendChild(a);
+    liNode.appendChild(a);
     var removeImgNode = cozmanovaHelper.createElementWithAttributes('img', {
         'src': gadgCtx.epl_baseurl + 'images/redcross.png',
         'height':'12px', 'style': 'margin-left: 10px;'});
