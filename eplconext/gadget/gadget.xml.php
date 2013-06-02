@@ -216,7 +216,7 @@ function jQInit() {
                     }
 
                     jQInit();
-//                    gadgets.window.adjustHeight();
+                    gadgets.window.adjustHeight();
                 }, linkul); // callAddPad
             } else {
                 alert("Invalid padname");
