@@ -234,14 +234,14 @@ function createNewPadNode(pad,linkul) {
         'height':'12px', 'style': 'margin-right:5px;'});
     liNode.appendChild(imgNode);
 
-    var a = cozmanovaHelper.createElementWithAttributes('a', { 'href' : '#', 'class' : 'padnode' } );
+    var a = cozmanovaHelper.createElementWithAttributes('a', { 'target': '_blank', 'href' : 'https://etherpad-groups.identitylabs.org/p/' + pad.group_id+'$'+pad.name , 'class' : 'padnode' } );
     a.appendChild(document.createTextNode(s));
 
-    a.onclick = function() {
-        // always: grouppad, so construct FQ padname:
-        makeBig(pad.group_id+'$'+pad.name);
-    }
-    liNode.appendChild(a);
+//    a.onclick = function() {
+//        // always: grouppad, so construct FQ padname:
+//        makeBig(pad.group_id+'$'+pad.name);
+//    }
+//    liNode.appendChild(a);
     var removeImgNode = cozmanovaHelper.createElementWithAttributes('img', {
         'src': gadgCtx.epl_baseurl + 'images/redcross.png',
         'height':'12px', 'style': 'margin-left: 10px;'});
