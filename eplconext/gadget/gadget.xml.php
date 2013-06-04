@@ -129,7 +129,7 @@ function deletePad(groupname, padid, onsuccessfunction, xtra_argument) {
             }
 
         } else {
-            console.log('text/data:' + response.text + '-/-' + response.data);
+//            console.log('text/data:' + response.text + '-/-' + response.data);
         }
     }, params);
 
@@ -484,7 +484,7 @@ function authorizeCanvasPad(padid) {
 //            });
 
         } else {
-            console.log('text/data:' + response.text + '-/-' + response.data);
+//            console.log('text/data:' + response.text + '-/-' + response.data);
         }
     }, params);
 
@@ -578,7 +578,7 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
                 gadgets.window.adjustHeight();
 
             } else {
-                console.log('text/data:' + response.text + '-/-' + response.data);
+//                console.log('text/data:' + response.text + '-/-' + response.data);
             }
         }, params);
 
