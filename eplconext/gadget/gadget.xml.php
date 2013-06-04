@@ -234,13 +234,13 @@ function createNewPadNode(pad,linkul) {
         'height':'12px', 'style': 'margin-right:5px;'});
     liNode.appendChild(imgNode);
 
-    var a = cozmanovaHelper.createElementWithAttributes('a', { 'target': '_blank', 'href' : 'https://etherpad-groups.identitylabs.org/p/' + pad.group_id+'$'+pad.name , 'class' : 'padnode' } );
+    var a = cozmanovaHelper.createElementWithAttributes('a', { 'href' : '#', 'class' : 'padnode' } );
     a.appendChild(document.createTextNode(s));
 
-//    a.onclick = function() {
-//        // always: grouppad, so construct FQ padname:
-//        makeBig(pad.group_id+'$'+pad.name);
-//    }
+    a.onclick = function() {
+        authorizeCanvasPad(pad.group_id+'$'+pad.name);
+        window.open('https://etherpad-groups.identitylabs.org/p/' + pad.group_id + '$' + pad.name);
+    }
     liNode.appendChild(a);
     var removeImgNode = cozmanovaHelper.createElementWithAttributes('img', {
         'src': gadgCtx.epl_baseurl + 'images/redcross.png',
@@ -453,6 +453,33 @@ function messagebox(message, description) {
     $('#messagebox').show();
     $('#mbox_title').text(message);
     $('#mbox_description').html(description);
+}
+
+// Invoke makeRequest() to fetch a token that authorizes access to a given pad
+// OAuth has been setup by now because fetchData does this.
+function authorizeCanvasPad(padid) {
+    var params = {};
+    url = gadgCtx.epl_baseurl+'padmanager.php/padaccesstoken/'+escape(groupcontext) + '/' + escape(padid);
+
+    clog('Accessing URL: ' + url);
+    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+    params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.OAUTH;
+    params[gadgets.io.RequestParameters.OAUTH_SERVICE_NAME] = "EPLconext";
+    params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
+    gadgets.io.makeRequest(url, function (response) {
+        if (response.oauthApprovalUrl) {
+            alert('OAuth not yet setup; flow error?');
+            return;
+        }
+
+        if (response.data) {
+            window.open('https://etherpad-groups.identitylabs.org/p/' + pad.group_id+'$'+pad.name);
+
+        } else {
+            alert('text/data:' + response.text + '-/-' + response.data);
+        }
+    }, params);
+
 }
 
 function gadgetLoaded() {
