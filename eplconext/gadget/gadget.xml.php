@@ -399,6 +399,7 @@ function fetchData() {
             personalize.onclick = popup.createOpenerOnClick();
             var approvaldone = document.getElementById('approvaldone');
             approvaldone.onclick = popup.createApprovedOnClick();
+            decommission_splash();
             showOneSection('approval');
         } else if (response.data) {
             var mainDom = document.getElementById('main');
@@ -417,7 +418,8 @@ function fetchData() {
 //            var err = document.createTextNode('OAuth error: ' +
 //                response.oauthError + ': ' + response.oauthErrorText);
 //            main.appendChild(err);
-//            showOneSection('main');
+            decommission_splash();
+            showOneSection('main');
         }
         // always do:
         gadgets.window.adjustHeight();
