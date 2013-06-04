@@ -129,7 +129,7 @@ function deletePad(groupname, padid, onsuccessfunction, xtra_argument) {
             }
 
         } else {
-            alert('text/data:' + response.text + '-/-' + response.data);
+            console.log('text/data:' + response.text + '-/-' + response.data);
         }
     }, params);
 
@@ -239,7 +239,6 @@ function createNewPadNode(pad,linkul) {
 
     a.onclick = function() {
         authorizeCanvasPad(pad.group_id+'$'+pad.name);
-        window.open('https://etherpad-groups.identitylabs.org/p/' + pad.group_id + '$' + pad.name);
     }
     liNode.appendChild(a);
     var removeImgNode = cozmanovaHelper.createElementWithAttributes('img', {
@@ -411,7 +410,7 @@ function fetchData() {
             jQInit(); // install click handlers
             gadgets.window.adjustHeight();
         } else {
-            alert('text/data:' + response.text + '-/-' + response.data);
+            console.log('text/data:' + response.text + '-/-' + response.data);
             // The response.oauthError and response.oauthErrorText values may help debug
             // problems with your gadget.
             var main = document.getElementById('main');
@@ -485,7 +484,7 @@ function authorizeCanvasPad(padid) {
 //            });
 
         } else {
-            alert('text/data:' + response.text + '-/-' + response.data);
+            console.log('text/data:' + response.text + '-/-' + response.data);
         }
     }, params);
 
@@ -517,7 +516,7 @@ function gadgetLoaded() {
                 top.postMessage("update",top.location.origin);
             });
         }
-//        gadgets.window.adjustHeight();
+        gadgets.window.adjustHeight();
 //        decommission_splash();
     });
 }
@@ -579,7 +578,7 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
                 gadgets.window.adjustHeight();
 
             } else {
-                alert('text/data:' + response.text + '-/-' + response.data);
+                console.log('text/data:' + response.text + '-/-' + response.data);
             }
         }, params);
 
