@@ -410,14 +410,14 @@ function fetchData() {
             jQInit(); // install click handlers
             gadgets.window.adjustHeight();
         } else {
-            console.log('text/data:' + response.text + '-/-' + response.data);
-            // The response.oauthError and response.oauthErrorText values may help debug
-            // problems with your gadget.
-            var main = document.getElementById('main');
-            var err = document.createTextNode('OAuth error: ' +
-                response.oauthError + ': ' + response.oauthErrorText);
-            main.appendChild(err);
-            showOneSection('main');
+//            console.log('text/data:' + response.text + '-/-' + response.data);
+//            // The response.oauthError and response.oauthErrorText values may help debug
+//            // problems with your gadget.
+//            var main = document.getElementById('main');
+//            var err = document.createTextNode('OAuth error: ' +
+//                response.oauthError + ': ' + response.oauthErrorText);
+//            main.appendChild(err);
+//            showOneSection('main');
         }
         // always do:
         gadgets.window.adjustHeight();
