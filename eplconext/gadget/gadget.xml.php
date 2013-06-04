@@ -473,7 +473,12 @@ function authorizeCanvasPad(padid) {
         }
 
         if (response.data) {
-            window.open('https://etherpad-groups.identitylabs.org/p/' + pad.group_id+'$'+pad.name);
+            var j = response.data.data;
+            pat = j.padaccesstoken;
+
+            // take to url:
+            var url = gadgCtx.epl_baseurl+'main-canvas.php?pat='+pat;
+            window.open(url);
 
         } else {
             alert('text/data:' + response.text + '-/-' + response.data);
