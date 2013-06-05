@@ -479,8 +479,7 @@ function authorizeCanvasPad(padid) {
 
             // take to url:
             var url = gadgCtx.epl_baseurl+'main-canvas.php?pat='+pat;
-            var w = window.open(url, '_blank');
-            w.focus();
+            window.open(url);
 //            $.get(url, function(page_result) {
 //                w.document.write(page_result.page_content);
 //            });
