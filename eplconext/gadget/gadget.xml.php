@@ -238,7 +238,8 @@ function createNewPadNode(pad,linkul) {
     a.appendChild(document.createTextNode(s));
 
     a.onclick = function() {
-        authorizeCanvasPad(pad.group_id+'$'+pad.name);
+        nw = window.open();
+        authorizeCanvasPad(pad.group_id+'$'+pad.name, nw);
     }
     liNode.appendChild(a);
     var removeImgNode = cozmanovaHelper.createElementWithAttributes('img', {
@@ -458,7 +459,7 @@ function messagebox(message, description) {
 
 // Invoke makeRequest() to fetch a token that authorizes access to a given pad
 // OAuth has been setup by now because fetchData does this.
-function authorizeCanvasPad(padid) {
+function authorizeCanvasPad(padid, nw) {
     var params = {};
     url = gadgCtx.epl_baseurl+'padmanager.php/padaccesstoken/'+escape(groupcontext) + '/' + escape(padid);
 
@@ -479,7 +480,8 @@ function authorizeCanvasPad(padid) {
 
             // take to url:
             var url = gadgCtx.epl_baseurl+'main-canvas.php?pat='+pat;
-            window.open(url);
+            //window.open(url);
+            nw.location = url;
 //            $.get(url, function(page_result) {
 //                w.document.write(page_result.page_content);
 //            });
