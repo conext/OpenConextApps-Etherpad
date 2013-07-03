@@ -502,6 +502,7 @@ function gadgetLoaded() {
                 clog(d);
                 user_id = result.id;
                 jQInit();
+                gadgets.window.adjustHeight();
                 window.addEventListener("message", function(e){
                     if (e.data) {
                         currentGroup = e.data;
