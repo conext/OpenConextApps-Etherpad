@@ -53,10 +53,10 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
     <p>Give this gadget permission to use your personal and group information
         with Etherpad. Without this permission it is not possible to start and
         share pads. Your permission will be remembered for this gadget.</p>
-    <a href="#" id="personalize">Personalize the gadget.</a>
+    <a href="#" id="personalize">Authorise gadget.</a>
 </div>
 <div id="waiting" style="display: none">Please click <a href="#" id="approvaldone">I've approved access</a>
-    once you've approved access to your data.</div>
+    once you've approved access to your personal and group information.</div>
 
 <div id="messagebox">
     <div id="mbox_title">
@@ -529,84 +529,84 @@ gadgets.util.registerOnLoadHandler(gadgetLoaded);
 </Content>
     <!-- ================================================================================================ -->
     <!-- would want: ${UserPrefs.groupContext} -->
-<Content type="html" view="canvas">
-    <![CDATA[
-    <div id="dEtherpadLite"></div>
-    <script src="https://etherpad-groups.identitylabs.org/eplconext/gadget/h.js"></script>
-<script type="text/javascript">
-
-    function clog(message) {
-        console.log("(*) Etherpad-Groups: " + message);
-    }
-
-    // duplicated in each view:
-    var gadgCtx = {
-        epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/',
-        portal_baseurl: top.location.origin
-    };
-
-    // Invoke makeRequest() to fetch a token that authorizes access to a given pad
-    // OAuth has been setup by now because fetchData does this.
-    function authorizeCanvasPad(padid) {
-        var params = {};
-        url = gadgCtx.epl_baseurl+'padmanager.php/padaccesstoken/'+escape(groupcontext) + '/' + escape(padid);
-
-        clog('Accessing URL: ' + url);
-        params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
-        params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.OAUTH;
-        params[gadgets.io.RequestParameters.OAUTH_SERVICE_NAME] = "EPLconext";
-        params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
-        gadgets.io.makeRequest(url, function (response) {
-            if (response.oauthApprovalUrl) {
-                alert('OAuth not yet setup; flow error?');
-                return;
-            }
-
-            if (response.data) {
-                var j = response.data.data;
-                pat = j.padaccesstoken;
-
-                // take to url:
-                var url = gadgCtx.epl_baseurl+'main-canvas.php?pat='+pat;
-
-                var ifr = cozmanovaHelper.createElementWithAttributes('iframe', {
-                    'src':url,
-                    'frameborder':0, 'scrolling':'auto', 'width':'100%', 'height':'600px'
-                });
-
-                document.getElementById('dEtherpadLite').appendChild(ifr);
-
-                gadgets.window.adjustHeight();
-
-            } else {
-//                console.log('text/data:' + response.text + '-/-' + response.data);
-            }
-        }, params);
-
-    }
-
-    var prefs;
-    var groupcontext;
-    var padname;
-    var currentGroup;
-
-    function gadgetLoaded() {
-        clog('Canvas view executes gadgetLoaded()');
-
-        var prefs = gadgets.views.getParams();
-        groupcontext = prefs['groupnameParam'];
-        padname = prefs['padparam'];
-
-        authorizeCanvasPad(padname);
-    }
-
-    clog('Canvas view executes global script.');
-
-    gadgets.util.registerOnLoadHandler(gadgetLoaded);
-
-</script>
-
-]]>
-</Content>
+<!--<Content type="html" view="canvas">-->
+<!--    <![CDATA[-->
+<!--    <div id="dEtherpadLite"></div>-->
+<!--    <script src="https://etherpad-groups.identitylabs.org/eplconext/gadget/h.js"></script>-->
+<!--<script type="text/javascript">-->
+<!---->
+<!--    function clog(message) {-->
+<!--        console.log("(*) Etherpad-Groups: " + message);-->
+<!--    }-->
+<!---->
+<!--    // duplicated in each view:-->
+<!--    var gadgCtx = {-->
+<!--        epl_baseurl: 'https://etherpad-groups.identitylabs.org/eplconext/',-->
+<!--        portal_baseurl: top.location.origin-->
+<!--    };-->
+<!---->
+<!--    // Invoke makeRequest() to fetch a token that authorizes access to a given pad-->
+<!--    // OAuth has been setup by now because fetchData does this.-->
+<!--    function authorizeCanvasPad(padid) {-->
+<!--        var params = {};-->
+<!--        url = gadgCtx.epl_baseurl+'padmanager.php/padaccesstoken/'+escape(groupcontext) + '/' + escape(padid);-->
+<!---->
+<!--        clog('Accessing URL: ' + url);-->
+<!--        params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;-->
+<!--        params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.OAUTH;-->
+<!--        params[gadgets.io.RequestParameters.OAUTH_SERVICE_NAME] = "EPLconext";-->
+<!--        params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;-->
+<!--        gadgets.io.makeRequest(url, function (response) {-->
+<!--            if (response.oauthApprovalUrl) {-->
+<!--                alert('OAuth not yet setup; flow error?');-->
+<!--                return;-->
+<!--            }-->
+<!---->
+<!--            if (response.data) {-->
+<!--                var j = response.data.data;-->
+<!--                pat = j.padaccesstoken;-->
+<!---->
+<!--                // take to url:-->
+<!--                var url = gadgCtx.epl_baseurl+'main-canvas.php?pat='+pat;-->
+<!---->
+<!--                var ifr = cozmanovaHelper.createElementWithAttributes('iframe', {-->
+<!--                    'src':url,-->
+<!--                    'frameborder':0, 'scrolling':'auto', 'width':'100%', 'height':'600px'-->
+<!--                });-->
+<!---->
+<!--                document.getElementById('dEtherpadLite').appendChild(ifr);-->
+<!---->
+<!--                gadgets.window.adjustHeight();-->
+<!---->
+<!--            } else {-->
+<!--//                console.log('text/data:' + response.text + '-/-' + response.data);-->
+<!--            }-->
+<!--        }, params);-->
+<!---->
+<!--    }-->
+<!---->
+<!--    var prefs;-->
+<!--    var groupcontext;-->
+<!--    var padname;-->
+<!--    var currentGroup;-->
+<!---->
+<!--    function gadgetLoaded() {-->
+<!--        clog('Canvas view executes gadgetLoaded()');-->
+<!---->
+<!--        var prefs = gadgets.views.getParams();-->
+<!--        groupcontext = prefs['groupnameParam'];-->
+<!--        padname = prefs['padparam'];-->
+<!---->
+<!--        authorizeCanvasPad(padname);-->
+<!--    }-->
+<!---->
+<!--    clog('Canvas view executes global script.');-->
+<!---->
+<!--    gadgets.util.registerOnLoadHandler(gadgetLoaded);-->
+<!---->
+<!--</script>-->
+<!---->
+<!--]]>-->
+<!--</Content>-->
 
 </Module>
