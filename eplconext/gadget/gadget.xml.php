@@ -187,8 +187,8 @@ function jQInit() {
         var linkul = this.parentNode.parentNode;
 
         var padname = prompt("Name for new pad in the group " + groupname);
-        if (padname == null) {
-            // cancelled
+        if (/[;\/\?:@&=+\$,{}\^\[\]`|]/.test(padname) || padname == null) {
+            alert("Your pad name cannot contain the following characters: ;\?:@&=+\$,{}\^\[\]`|")
         } else {
             if (padname.length > 0) {
 
