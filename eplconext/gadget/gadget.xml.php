@@ -410,7 +410,7 @@ function fetchData() {
             decommission_splash();
             showList(response);
             jQInit(); // install click handlers
-//            gadgets.window.adjustHeight();
+            gadgets.window.adjustHeight();
         } else {
 //            console.log('text/data:' + response.text + '-/-' + response.data);
 //            // The response.oauthError and response.oauthErrorText values may help debug
@@ -423,7 +423,7 @@ function fetchData() {
             showOneSection('main');
         }
         // always do:
-        gadgets.window.adjustHeight();
+//        gadgets.window.adjustHeight();
     }, params);
 }
 
