@@ -519,7 +519,7 @@ function gadgetLoaded() {
                 top.postMessage("update",top.location.origin);
             });
         }
-        gadgets.window.adjustHeight();
+
 //        decommission_splash();
     });
 }
