@@ -15,7 +15,7 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
 <ModulePrefs title="EtherpadLite"
              scrolling="true"
              height="800"
-             author="mdobrinic & Cloud Identity Limited"
+             author="mdobrinic and Cloud Identity Limited"
              author_email="info@cozmanova.com"
              description="Etherpad Lite GroupPad gadget"
              screenshot="https://etherpad-groups.identitylabs.org/eplconext/images/etherpad.png"
