@@ -17,6 +17,7 @@ ul {
 }
 
 #splash {
+    /* CHANGE BACKGROUND-IMAGE URL */
     background-image: url('https://etherpad-groups.identitylabs.org/eplconext/css/img/etherpad-icon.png');
     background-repeat: no-repeat;
     background-position: center center;
@@ -47,6 +48,7 @@ ul {
 
 #etherpadbar {
     background-color: #1e3e73;
+    /* CHANGE BACKGROUND-IMAGE URL */
     background-image: url('https://etherpad-groups.identitylabs.org/eplconext/css/img/etherpad-icon.png');
     background-size: auto 24px;
     background-position: 3px center;
