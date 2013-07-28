@@ -12,10 +12,14 @@ header ("Content-Type:text/xml");
 print '<?xml version="1.0" encoding="UTF-8" ?>';
 ?>
 <Module>
-<ModulePrefs title="EtherpadLite" scrolling="true" height="800"
-             author="mdobrinic"
+<ModulePrefs title="EtherpadLite"
+             scrolling="true"
+             height="800"
+             author="mdobrinic & Cloud Identity Limited"
              author_email="info@cozmanova.com"
-             description="Etherpad Lite GroupPad gadget">
+             description="Etherpad Lite GroupPad gadget"
+             screenshot="https://etherpad-groups.identitylabs.org/eplconext/images/etherpad.png"
+             thumbnail="https://etherpad-groups.identitylabs.org/eplconext/images/etherpad.png">
     <Require feature="opensocial-2.5" />
     <Require feature="opensocial-data" />
     <Require feature="dynamic-height"/>
