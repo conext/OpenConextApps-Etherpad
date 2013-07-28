@@ -8,7 +8,7 @@
  *
  */
 
-if ( ! (__CPC_WEB_CGIUTIL_PHP == 1) )
+if ( ! ('__CPC_WEB_CGIUTIL_PHP' == 1) )
 {
 	define( '__CPC_WEB_CGIUTIL_PHP', 1 );
 

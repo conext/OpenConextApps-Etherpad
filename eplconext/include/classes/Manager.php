@@ -41,7 +41,7 @@ class EPLc_Manager {
 		}
 		
 		$o = EPLc_Service_Registry::serviceInstance($service);
-		return $o->perform($userinfo, $groupinfo, $serviceArgs);
+		return $o->perform($userinfo, $groupinfo, $arguments);
 	}
 	
 	

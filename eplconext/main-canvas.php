@@ -30,10 +30,10 @@ if ($userattributes != null) {
 if (isset($userattributes['conext'])) {
 	$userId = $userattributes['conext'];
 } else {
-	$userId = $userattributes['urn:mace:dir:attribute-def:cn'];
+	$userId = $userattributes['userinfo']->_userId;
 }
 if (is_array($userId)) { $userId = join(',', $userId); }
-$userCommonName = $userattributes['urn:mace:dir:attribute-def:cn'];
+$userCommonName = $userattributes['userinfo']->_userCommonName;
 if (is_array($userCommonName)) { $userCommonName = join(',', $userCommonName); }
 
 
