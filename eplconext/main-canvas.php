@@ -18,7 +18,7 @@ if ($padaccesstoken != null) {
 if ($userattributes != null) {
 	// Logger_Log::debug("Retrieved from store: ". print_r($userattributes, true), 'main-canvas.php');
 	// only allow one-time-use, so clear from session now:
-	$storage->remove('userdata', $userdata_token, null);
+	$storage->remove('userdata', $padaccesstoken, null);
 	$storage->removeExpired();	// maintenance/cleanup
 } else {
 	print("Unknown or invalid PadAccessToken."); die();
