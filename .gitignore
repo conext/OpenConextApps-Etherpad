@@ -4,3 +4,6 @@ eplconext/simplesaml
 eplconext/simplesamlphp
 eplconext/simplesaml/*
 eplconext/simplesamlphp/*
+eplconext/simplesamlphp/data/sqllite/oauth.sqllite
+eplconext/simplesamlphp/log/simplesamlphp.log
+eplconext/storage/padaccesstoken.sqlite
