@@ -186,11 +186,11 @@ class EPLc_Manager {
 	 */
 	function parseUserId($userdata, $postbody = null) {
 		/* conext-attribute is introduced for development purposes */
-		if (isset($userdata['conext'])) {
-			$userId = $userdata['conext'];
-		} else {
-			$userId = $userdata['urn:mace:dir:attribute-def:eduPersonPrincipalName'];
-		}
+        if (isset($userdata['userinfo']) && $userdata['userinfo'] instanceof EPLc_UserInfo) {
+            $userId = $userdata['userinfo']->_userId;;
+        } else {
+            $userId = $userdata['urn:mace:dir:attribute-def:eduPersonPrincipalName'];
+        }
 		if (is_array($userId)) { $userId = join(',', $userId); }
 		
 		// can we establish userdata from postbody / "viewer"-section?
@@ -206,7 +206,11 @@ class EPLc_Manager {
 			}
 		}
 		if ($userCommonName == null) {
-			$userCommonName = $userdata['urn:mace:dir:attribute-def:cn'];
+            if (isset($userdata['userinfo']) && $userdata['userinfo'] instanceof EPLc_UserInfo) {
+                $userCommonName = $userdata['userinfo']->_userCommonName;
+            } else {
+                $userCommonName = $userdata['urn:mace:dir:attribute-def:cn'];
+            }
 			if (is_array($userCommonName)) { $userCommonName = join(',', $userCommonName); }
 		}
 
