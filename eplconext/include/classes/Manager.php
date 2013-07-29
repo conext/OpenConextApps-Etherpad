@@ -186,7 +186,7 @@ class EPLc_Manager {
 	 */
 	function parseUserId($userdata, $postbody = null) {
 		/* conext-attribute is introduced for development purposes */
-        if (isset($userdata['userinfo']) && $userdata['userinfo'] instanceof EPLc_UserInfo) {
+        if (isset($userdata['userinfo']) and ($userdata['userinfo'] instanceof EPLc_UserInfo)) {
             $userId = $userdata['userinfo']->_userId;;
         } else {
             $userId = $userdata['urn:mace:dir:attribute-def:eduPersonPrincipalName'];
@@ -206,7 +206,7 @@ class EPLc_Manager {
 			}
 		}
 		if ($userCommonName == null) {
-            if (isset($userdata['userinfo']) && $userdata['userinfo'] instanceof EPLc_UserInfo) {
+            if (isset($userdata['userinfo']) and ($userdata['userinfo'] instanceof EPLc_UserInfo)) {
                 $userCommonName = $userdata['userinfo']->_userCommonName;
             } else {
                 $userCommonName = $userdata['urn:mace:dir:attribute-def:cn'];
